@@ -1,14 +1,51 @@
 const navToggle = document.querySelector(".nav-toggle");
 const nav = document.querySelector("#site-nav");
-const navLinks = document.querySelectorAll(".site-nav a[href^='#']");
+const routeLinks = document.querySelectorAll("a[href^='/']");
+const navLinks = document.querySelectorAll(".site-nav a[href^='/']");
 const year = document.querySelector("[data-year]");
 const form = document.querySelector("[data-contact-form]");
 const formStatus = document.querySelector("[data-form-status]");
 const copyEmailButton = document.querySelector("[data-copy-email]");
 const emailAddress = "info@paritylk.com";
+const routeMap = new Map([
+  ["/", "top"],
+  ["/services", "services"],
+  ["/courses", "courses"],
+  ["/cloud", "cloud"],
+  ["/support", "support"],
+  ["/contact", "contact"],
+]);
 const animatedElements = document.querySelectorAll(
   ".proof-grid > div, .section-heading, .service-card, .course-card, .cloud-checklist > article, .support-panel, .launch-stats > div, .contact-form"
 );
+
+const normalizePath = (path) => {
+  const cleanPath = path.replace(/\/+$/, "");
+  return cleanPath || "/";
+};
+
+const getRoutePath = (link) => normalizePath(new URL(link.href).pathname);
+
+const scrollToRoute = (path, shouldUpdateHistory = true) => {
+  const normalizedPath = normalizePath(path);
+  const id = routeMap.get(normalizedPath);
+
+  if (!id) {
+    return false;
+  }
+
+  const target = document.getElementById(id);
+  if (!target) {
+    return false;
+  }
+
+  if (shouldUpdateHistory && normalizePath(window.location.pathname) !== normalizedPath) {
+    window.history.pushState({ path: normalizedPath }, "", normalizedPath);
+  }
+
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
+  return true;
+};
 
 if (year) {
   year.textContent = new Date().getFullYear();
@@ -28,10 +65,46 @@ if (navToggle && nav) {
   });
 }
 
+if (routeLinks.length) {
+  routeLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (
+        event.defaultPrevented ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey ||
+        link.target === "_blank"
+      ) {
+        return;
+      }
+
+      const routePath = getRoutePath(link);
+
+      if (!routeMap.has(routePath)) {
+        return;
+      }
+
+      event.preventDefault();
+      scrollToRoute(routePath);
+    });
+  });
+
+  window.addEventListener("popstate", () => {
+    scrollToRoute(window.location.pathname, false);
+  });
+
+  if (routeMap.has(normalizePath(window.location.pathname))) {
+    window.requestAnimationFrame(() => {
+      scrollToRoute(window.location.pathname, false);
+    });
+  }
+}
+
 if (navLinks.length) {
   const navMap = new Map();
   navLinks.forEach((link) => {
-    const id = link.getAttribute("href").slice(1);
+    const id = routeMap.get(getRoutePath(link));
     const section = document.getElementById(id);
     if (section) {
       navMap.set(id, link);
@@ -40,7 +113,7 @@ if (navLinks.length) {
 
   const setActiveNav = (id) => {
     navLinks.forEach((link) => {
-      const isActive = link.getAttribute("href") === `#${id}`;
+      const isActive = routeMap.get(getRoutePath(link)) === id;
       link.classList.toggle("is-active", isActive);
       if (isActive) {
         link.setAttribute("aria-current", "true");

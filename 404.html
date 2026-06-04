@@ -24,7 +24,7 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700;800&display=swap"
       rel="stylesheet"
     >
-    <link rel="stylesheet" href="assets/css/styles.css?v=layout-width-1">
+    <link rel="stylesheet" href="assets/css/styles.css?v=hero-text-1">
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -51,9 +51,10 @@
         <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
           <div class="nav-links">
             <a href="/services">Services</a>
-            <a href="/courses">Courses</a>
             <a href="/cloud">Cloud</a>
             <a href="/support">Support</a>
+            <a href="/courses">Courses</a>
+            <a href="/careers">Careers</a>
           </div>
           <a class="nav-cta" href="/contact">Contact</a>
         </nav>
@@ -64,14 +65,15 @@
       <section class="hero" id="top" aria-labelledby="hero-title">
         <img
           class="hero-image"
-          src="assets/images/paritylk-workbench.png"
-          width="1400"
-          height="950"
-          alt="Professional service dashboard showing website delivery, mobile app, cloud deployment, content planning, and support workflows."
+          src="assets/images/hero/hero-websites.png"
+          width="1672"
+          height="941"
+          alt="Dark website design workspace with responsive web screens and delivery tools."
+          data-hero-image
         >
         <div class="container hero-content">
           <p class="eyebrow">Digital delivery partner</p>
-          <h1 id="hero-title">ParityLk</h1>
+          <h1 id="hero-title" class="hero-service-slide" data-hero-slide>We build websites</h1>
           <p class="hero-copy">
             Websites, mobile apps, cloud deployment, student courses, content creation,
             and support for teams that need practical digital skills and reliable launches.
@@ -344,6 +346,61 @@
         </div>
       </section>
 
+      <section class="section section-light" id="careers">
+        <div class="container section-heading">
+          <p class="eyebrow">Careers</p>
+          <h2>Open Mobile Development internship positions.</h2>
+          <p>
+            We are opening practical internship roles for learners who want hands-on
+            experience building mobile apps, improving UI flows, and supporting real delivery work.
+          </p>
+        </div>
+
+        <div class="container careers-grid" aria-label="Open career roles">
+          <article class="career-card">
+            <div class="career-topline">
+              <span class="career-badge">Internship</span>
+              <span>Mobile Development</span>
+            </div>
+            <h3>React Native Intern</h3>
+            <p>
+              Work with React Native app screens, reusable components, navigation flows,
+              API integration support, bug fixing, and mobile-first user experience improvements.
+            </p>
+            <ul>
+              <li>Basic JavaScript or TypeScript knowledge</li>
+              <li>Interest in React Native and mobile UI development</li>
+              <li>Willingness to learn Git, debugging, and deployment workflows</li>
+              <li>Ability to use AI tools responsibly to research, prototype, and improve delivery speed</li>
+              <li>Commitment to complete assigned tasks, communicate blockers early, and follow project timelines</li>
+              <li>Confidence to speak clearly, share progress, and present completed work to the team</li>
+            </ul>
+            <a class="career-link" href="https://forms.gle/r8dBgu6D9do1oTmeA" target="_blank" rel="noopener">Apply interest</a>
+          </article>
+
+          <article class="career-card">
+            <div class="career-topline">
+              <span class="career-badge">Internship</span>
+              <span>Mobile Development</span>
+            </div>
+            <h3>Flutter Intern</h3>
+            <p>
+              Support Flutter mobile app development with interface screens, widgets,
+              app state, testing, issue fixes, and release preparation for mobile projects.
+            </p>
+            <ul>
+              <li>Basic Dart or programming fundamentals</li>
+              <li>Interest in Flutter widgets, layouts, and mobile app structure</li>
+              <li>Comfort learning from code reviews and practical tasks</li>
+              <li>Ability to use AI tools responsibly to explore solutions, document ideas, and speed up learning</li>
+              <li>Commitment to regular practice, task ownership, and reliable communication during delivery work</li>
+              <li>Confidence to speak clearly, join discussions, and present app screens or progress updates</li>
+            </ul>
+            <a class="career-link" href="https://forms.gle/r8dBgu6D9do1oTmeA" target="_blank" rel="noopener">Apply interest</a>
+          </article>
+        </div>
+      </section>
+
       <section class="section section-light" id="contact">
         <div class="container contact-layout">
           <div class="section-heading align-left">
@@ -479,6 +536,7 @@
             <a href="/cloud">Cloud</a>
             <a href="/support">Our work</a>
             <a href="/courses">Courses</a>
+            <a href="/careers">Careers</a>
           </div>
           <div>
             <h3>Services</h3>
@@ -486,6 +544,12 @@
             <a href="/services">Mobile apps</a>
             <a href="/services">Content creation</a>
             <a href="/services">Monitoring</a>
+          </div>
+          <div>
+            <h3>Careers</h3>
+            <a href="/careers">React Native Intern</a>
+            <a href="/careers">Flutter Intern</a>
+            <a href="https://forms.gle/r8dBgu6D9do1oTmeA" target="_blank" rel="noopener">Apply interest</a>
           </div>
           <div>
             <h3>Contact</h3>
@@ -498,10 +562,9 @@
 
       <div class="container footer-bottom">
         <p>&copy; <span data-year></span> ParityLk. All rights reserved.</p>
-        <span>Built for fast static hosting and cloud-ready launches.</span>
       </div>
     </footer>
 
-    <script src="assets/js/main.js?v=clean-routes-1"></script>
+    <script src="assets/js/main.js?v=hero-text-1"></script>
   </body>
 </html>

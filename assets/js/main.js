@@ -6,17 +6,47 @@ const year = document.querySelector("[data-year]");
 const form = document.querySelector("[data-contact-form]");
 const formStatus = document.querySelector("[data-form-status]");
 const copyEmailButton = document.querySelector("[data-copy-email]");
+const heroSlide = document.querySelector("[data-hero-slide]");
+const heroImage = document.querySelector("[data-hero-image]");
 const emailAddress = "info@paritylk.com";
+const heroSlides = [
+  {
+    message: "We build websites",
+    image: "assets/images/hero/hero-websites.png",
+    alt: "Dark website design workspace with responsive web screens and delivery tools.",
+  },
+  {
+    message: "We build mobile apps",
+    image: "assets/images/hero/hero-mobile-apps.png",
+    alt: "Dark mobile app development workspace with smartphone interfaces and code.",
+  },
+  {
+    message: "We create social media content",
+    image: "assets/images/hero/hero-content.png",
+    alt: "Dark content creation workspace with planning boards, editing timeline, and social media analytics.",
+  },
+  {
+    message: "We deploy cloud services",
+    image: "assets/images/hero/hero-cloud.png",
+    alt: "Dark cloud deployment workspace with server nodes, containers, and configuration panels.",
+  },
+  {
+    message: "We monitor software solutions",
+    image: "assets/images/hero/hero-support.png",
+    alt: "Dark software monitoring workspace with dashboards, alerts, and support panels.",
+  },
+];
 const routeMap = new Map([
   ["/", "top"],
   ["/services", "services"],
   ["/courses", "courses"],
   ["/cloud", "cloud"],
+  ["/careers", "careers"],
   ["/support", "support"],
   ["/contact", "contact"],
 ]);
 const animatedElements = document.querySelectorAll(
-  ".proof-grid > div, .section-heading, .service-card, .course-card, .cloud-checklist > article, .support-panel, .launch-stats > div, .contact-form"
+  ".proof-grid > div, .section-heading, .service-card, .course-card, .career-card, .cloud-checklist > article, .support-panel, .launch-stats > div, .contact-form"
 );
 
 const normalizePath = (path) => {
@@ -49,6 +79,38 @@ const scrollToRoute = (path, shouldUpdateHistory = true) => {
 
 if (year) {
   year.textContent = new Date().getFullYear();
+}
+
+if (heroSlide) {
+  heroSlide.textContent = heroSlides[0].message;
+
+  heroSlides.slice(1).forEach((slide) => {
+    const image = new Image();
+    image.src = slide.image;
+  });
+
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let heroSlideIndex = 0;
+
+    window.setInterval(() => {
+      heroSlideIndex = (heroSlideIndex + 1) % heroSlides.length;
+      const activeSlide = heroSlides[heroSlideIndex];
+
+      heroSlide.classList.remove("is-changing");
+      void heroSlide.offsetWidth;
+      heroSlide.textContent = activeSlide.message;
+      heroSlide.classList.add("is-changing");
+
+      if (heroImage) {
+        heroImage.classList.add("is-changing");
+        heroImage.onload = () => {
+          heroImage.classList.remove("is-changing");
+        };
+        heroImage.src = activeSlide.image;
+        heroImage.alt = activeSlide.alt;
+      }
+    }, 2800);
+  }
 }
 
 if (navToggle && nav) {

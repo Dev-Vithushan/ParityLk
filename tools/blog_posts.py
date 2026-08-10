@@ -8,6 +8,7 @@ POSTS = [
         "date": "2026-08-04",
         "date_label": "4 August 2026",
         "read": "6 min read",
+        "likes": 34,
         "image": "assets/images/hero/hero-websites.png",
         "image_alt": "Dark workspace showing website layouts, delivery boards, and development tools.",
         "excerpt": (
@@ -59,6 +60,11 @@ POSTS = [
               </li>
             </ul>
 
+            <figure class="article-figure">
+              <img src="assets/images/paritylk-workbench.png" alt="ParityLk workbench showing a site being built and reviewed across devices." loading="lazy" width="1600" height="900">
+              <figcaption>Most projects touch two or three of these areas at once, not just one.</figcaption>
+            </figure>
+
             <h2>Cloud work is its own thing</h2>
             <p>
               A surprising share of the problems we get asked about are not design or code
@@ -72,6 +78,11 @@ POSTS = [
               hold it all together. If something is already live and broken, that is a fine
               first message to send us.
             </p>
+
+            <figure class="article-figure">
+              <img src="assets/images/hero/hero-cloud.png" alt="Cloud deployment workspace with server nodes, containers, and configuration panels." loading="lazy" width="1672" height="941">
+              <figcaption>DNS, SSL, and environment settings cause more outages than code does.</figcaption>
+            </figure>
 
             <h2>Courses, because the skills gap is real</h2>
             <p>
@@ -93,6 +104,11 @@ POSTS = [
               <li><strong>We deploy and run launch checks</strong> on the real domain and environment.</li>
               <li><strong>We stay on for support</strong> &mdash; monitoring, fixes, and follow-up releases.</li>
             </ul>
+
+            <figure class="article-figure">
+              <img src="assets/images/hero/hero-support.png" alt="Software monitoring workspace with dashboards, alerts, and support panels." loading="lazy" width="1672" height="941">
+              <figcaption>After launch the work shifts to uptime checks, issue tracking, and follow-up releases.</figcaption>
+            </figure>
 
             <h2>Where we are today</h2>
             <p>
@@ -117,6 +133,7 @@ POSTS = [
         "date": "2026-07-28",
         "date_label": "28 July 2026",
         "read": "8 min read",
+        "likes": 57,
         "image": "assets/images/hero/hero-content.png",
         "image_alt": "Content planning workspace with editing timeline, publishing boards, and social analytics.",
         "excerpt": (
@@ -160,6 +177,11 @@ POSTS = [
               </li>
             </ul>
 
+            <figure class="article-figure">
+              <img src="assets/images/hero/hero-content.png" alt="Content planning workspace with an editing timeline and publishing boards." loading="lazy" width="1672" height="941">
+              <figcaption>Two channels done properly beat six channels done badly.</figcaption>
+            </figure>
+
             <h2>The funnel, without the mystique</h2>
             <p>
               Every customer moves through four rough stages, and most marketing failures are
@@ -192,6 +214,11 @@ POSTS = [
               If cost per acquisition is below lifetime value, you have a business. If it is above,
               more spending makes the problem bigger, not smaller.
             </p>
+
+            <figure class="article-figure">
+              <img src="assets/images/hero/hero-websites.png" alt="Responsive website layouts shown across desktop, laptop, tablet, and phone." loading="lazy" width="1672" height="941">
+              <figcaption>Every channel eventually points at your site, which makes it the first thing to fix.</figcaption>
+            </figure>
 
             <h2>Your website is the hinge</h2>
             <p>
@@ -234,6 +261,7 @@ POSTS = [
         "date": "2026-07-21",
         "date_label": "21 July 2026",
         "read": "7 min read",
+        "likes": 41,
         "image": "assets/images/hero/hero-mobile-apps.png",
         "image_alt": "Mobile app development workspace showing phone interfaces and application code.",
         "excerpt": (
@@ -260,6 +288,11 @@ POSTS = [
               <li><strong>One build, every device.</strong> Responsive pages work on phones, tablets, and desktops without separate work.</li>
               <li><strong>Cheap to change.</strong> Update the page and everyone sees it. No review queue, no waiting for users to update.</li>
             </ul>
+
+            <figure class="article-figure">
+              <img src="assets/images/hero/hero-websites.png" alt="A responsive website shown across several screen sizes." loading="lazy" width="1672" height="941">
+              <figcaption>One responsive build covers phone, tablet, and desktop without separate work.</figcaption>
+            </figure>
 
             <h2>What an app is genuinely better at</h2>
             <ul>
@@ -296,6 +329,11 @@ POSTS = [
               <li>Someone will use it weekly or more.</li>
               <li>You can commit to maintaining it beyond launch.</li>
             </ul>
+
+            <figure class="article-figure">
+              <img src="assets/images/hero/hero-mobile-apps.png" alt="Mobile app screens and code shown on a development workstation." loading="lazy" width="1672" height="941">
+              <figcaption>An app earns its place when someone opens it weekly, not when a competitor ships one.</figcaption>
+            </figure>
 
             <h2>The sequence that usually works</h2>
             <p>

@@ -24,6 +24,9 @@ const counters = document.querySelectorAll("[data-count-to]");
 const glowCards = document.querySelectorAll(
   ".service-card, .course-card, .career-card, .cloud-checklist article"
 );
+const article = document.querySelector(".article-body");
+const readingProgress = document.querySelector("[data-reading-progress]");
+const readingValue = document.querySelector("[data-reading-value]");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 if (year) {
@@ -148,7 +151,7 @@ if (animatedElements.length) {
   }
 }
 
-if (header || scrollProgress || heroContent) {
+if (header || scrollProgress || heroContent || readingProgress) {
   let scrollTicking = false;
 
   const renderScroll = () => {
@@ -168,6 +171,29 @@ if (header || scrollProgress || heroContent) {
     if (heroContent && hero && !prefersReducedMotion.matches) {
       const heroDepth = Math.min(scrolled, hero.offsetHeight);
       heroContent.style.setProperty("--hero-parallax", `${(heroDepth * 0.18).toFixed(1)}px`);
+    }
+
+    if (readingProgress && article && readingValue) {
+      // spans the article text only: not the hero, related posts, or footer
+      const bounds = article.getBoundingClientRect();
+      const top = bounds.top + scrolled;
+      const bottom = top + bounds.height;
+      const scrollable = bounds.height - window.innerHeight;
+
+      const read =
+        scrollable > 0
+          ? (scrolled - top) / scrollable
+          : (scrolled + window.innerHeight - top) / Math.max(bounds.height, 1);
+      const percent = Math.round(Math.min(Math.max(read, 0), 1) * 100);
+
+      readingProgress.style.setProperty("--read", percent);
+      readingValue.textContent = `${percent}%`;
+      // gone as soon as the related posts come into view
+      const viewportBottom = scrolled + window.innerHeight;
+      readingProgress.classList.toggle(
+        "is-visible",
+        viewportBottom > top + 80 && viewportBottom <= bottom + 60
+      );
     }
   };
 
@@ -247,4 +273,42 @@ if (glowCards.length && window.matchMedia("(hover: hover)").matches) {
       card.style.removeProperty("--pointer-y");
     });
   });
+}
+
+const likeButton = document.querySelector("[data-like]");
+
+if (likeButton) {
+  // Likes are stored in this browser only. A shared counter would need a
+  // backend; this just remembers whether you liked the post.
+  const storageKey = `paritylk-like-${likeButton.dataset.like}`;
+  const base = Number(likeButton.dataset.likeBase) || 0;
+  const countEl = likeButton.querySelector(".like-count");
+
+  let liked = false;
+  try {
+    liked = window.localStorage.getItem(storageKey) === "1";
+  } catch {
+    liked = false;
+  }
+
+  const render = () => {
+    likeButton.setAttribute("aria-pressed", String(liked));
+    countEl.textContent = base + (liked ? 1 : 0);
+  };
+
+  likeButton.addEventListener("click", () => {
+    liked = !liked;
+    try {
+      if (liked) {
+        window.localStorage.setItem(storageKey, "1");
+      } else {
+        window.localStorage.removeItem(storageKey);
+      }
+    } catch {
+      /* private mode: the count still updates for this visit */
+    }
+    render();
+  });
+
+  render();
 }

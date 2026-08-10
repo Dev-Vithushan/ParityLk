@@ -790,10 +790,10 @@ PAGES = [
 
 
 
-def blog_cards():
+def blog_cards(posts=None, indent="          "):
     cards = []
-    for post in POSTS:
-        cards.append(f"""          <article class="blog-card">
+    for post in posts if posts is not None else POSTS:
+        cards.append(f"""{indent}<article class="blog-card">
             <a class="blog-card-media" href="/blog/{post['slug']}/" tabindex="-1" aria-hidden="true">
               <img src="{post['image']}" alt="" loading="lazy">
             </a>
@@ -876,25 +876,54 @@ ARTICLE = """<!doctype html>
     </header>
 
     <main id="main">
-      <article class="article">
-        <section class="page-hero" aria-labelledby="page-title">
-          <div class="fx-grid" aria-hidden="true"></div>
-          <div class="fx-line" aria-hidden="true"><span class="fx-traveler"></span></div>
-          <div class="container article-hero">
-            <a class="article-back" href="/blog/">Back to all articles</a>
-            <p class="eyebrow">{category}</p>
-            <h1 id="page-title">{title}</h1>
-            <p class="article-lede">{excerpt}</p>
-            <p class="article-meta">{date_label} &middot; {read}</p>
+      <article class="article" data-article>
+        <div class="reading-progress" data-reading-progress aria-hidden="true">
+          <span class="reading-ring"></span>
+          <span class="reading-value" data-reading-value>0%</span>
+        </div>
+
+        <section class="page-hero article-head" aria-labelledby="page-title">
+          <div class="container article-head-inner">
+            <a class="article-back" href="/blog/">All articles</a>
+
+            <figure class="article-hero-media">
+              <img src="{image}" alt="{image_alt}" width="1672" height="941">
+              <figcaption class="article-hero-overlay">
+                <h1 id="page-title">{title}</h1>
+                <p class="article-lede">{excerpt}</p>
+              </figcaption>
+            </figure>
+
+            <div class="article-topbar">
+              <span class="blog-chip">{category}</span>
+              <span class="article-meta">{date_label}</span>
+              <span class="article-meta">{read}</span>
+            </div>
           </div>
         </section>
 
-        <div class="container article-cover">
-          <img src="{image}" alt="{image_alt}" width="1672" height="941">
-        </div>
-
         <div class="container article-body">
 {body}
+
+          <div class="article-reactions">
+            <button class="like-button" type="button" data-like="{slug}" data-like-base="{likes}"
+              aria-pressed="false">
+              <span class="like-heart" aria-hidden="true">&#9829;</span>
+              <span class="like-count">{likes}</span>
+              <span class="sr-only">likes</span>
+            </button>
+            <p class="like-note">Found this useful? A like tells us what to write more of.</p>
+          </div>
+        </div>
+
+        <div class="container article-related">
+          <div class="article-related-head">
+            <p class="eyebrow">Keep reading</p>
+            <h2>More from the blog</h2>
+          </div>
+          <div class="blog-grid">
+{related}
+          </div>
         </div>
 
         <div class="container">
@@ -959,8 +988,11 @@ for page in PAGES:
 
 nav_for_blog, _ = nav_markup("/blog/")
 for post in POSTS:
+    others = [p for p in POSTS if p["slug"] != post["slug"]]
     html = ARTICLE.format(
         version=VERSION,
+        likes=post["likes"],
+        related=blog_cards(others),
         nav=nav_for_blog,
         footer=FOOTER,
         slug=post["slug"],

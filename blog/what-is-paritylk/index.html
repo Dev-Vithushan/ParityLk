@@ -61,22 +61,31 @@
     </header>
 
     <main id="main">
-      <article class="article">
-        <section class="page-hero" aria-labelledby="page-title">
-          <div class="fx-grid" aria-hidden="true"></div>
-          <div class="fx-line" aria-hidden="true"><span class="fx-traveler"></span></div>
-          <div class="container article-hero">
-            <a class="article-back" href="/blog/">Back to all articles</a>
-            <p class="eyebrow">Company</p>
-            <h1 id="page-title">What is ParityLk, and what do we actually do?</h1>
-            <p class="article-lede">A plain explanation of who we are, the work we take on, and how a project moves from a first message to something live and supported.</p>
-            <p class="article-meta">4 August 2026 &middot; 6 min read</p>
+      <article class="article" data-article>
+        <div class="reading-progress" data-reading-progress aria-hidden="true">
+          <span class="reading-ring"></span>
+          <span class="reading-value" data-reading-value>0%</span>
+        </div>
+
+        <section class="page-hero article-head" aria-labelledby="page-title">
+          <div class="container article-head-inner">
+            <a class="article-back" href="/blog/">All articles</a>
+
+            <figure class="article-hero-media">
+              <img src="assets/images/hero/hero-websites.png" alt="Dark workspace showing website layouts, delivery boards, and development tools." width="1672" height="941">
+              <figcaption class="article-hero-overlay">
+                <h1 id="page-title">What is ParityLk, and what do we actually do?</h1>
+                <p class="article-lede">A plain explanation of who we are, the work we take on, and how a project moves from a first message to something live and supported.</p>
+              </figcaption>
+            </figure>
+
+            <div class="article-topbar">
+              <span class="blog-chip">Company</span>
+              <span class="article-meta">4 August 2026</span>
+              <span class="article-meta">6 min read</span>
+            </div>
           </div>
         </section>
-
-        <div class="container article-cover">
-          <img src="assets/images/hero/hero-websites.png" alt="Dark workspace showing website layouts, delivery boards, and development tools." width="1672" height="941">
-        </div>
 
         <div class="container article-body">
 
@@ -124,6 +133,11 @@
               </li>
             </ul>
 
+            <figure class="article-figure">
+              <img src="assets/images/paritylk-workbench.png" alt="ParityLk workbench showing a site being built and reviewed across devices." loading="lazy" width="1600" height="900">
+              <figcaption>Most projects touch two or three of these areas at once, not just one.</figcaption>
+            </figure>
+
             <h2>Cloud work is its own thing</h2>
             <p>
               A surprising share of the problems we get asked about are not design or code
@@ -137,6 +151,11 @@
               hold it all together. If something is already live and broken, that is a fine
               first message to send us.
             </p>
+
+            <figure class="article-figure">
+              <img src="assets/images/hero/hero-cloud.png" alt="Cloud deployment workspace with server nodes, containers, and configuration panels." loading="lazy" width="1672" height="941">
+              <figcaption>DNS, SSL, and environment settings cause more outages than code does.</figcaption>
+            </figure>
 
             <h2>Courses, because the skills gap is real</h2>
             <p>
@@ -159,6 +178,11 @@
               <li><strong>We stay on for support</strong> &mdash; monitoring, fixes, and follow-up releases.</li>
             </ul>
 
+            <figure class="article-figure">
+              <img src="assets/images/hero/hero-support.png" alt="Software monitoring workspace with dashboards, alerts, and support panels." loading="lazy" width="1672" height="941">
+              <figcaption>After launch the work shifts to uptime checks, issue tracking, and follow-up releases.</figcaption>
+            </figure>
+
             <h2>Where we are today</h2>
             <p>
               We are deliberately small: three or more active customers at any time, five websites
@@ -174,6 +198,56 @@
               it, and we aim to reply within one business day.
             </p>
         
+
+          <div class="article-reactions">
+            <button class="like-button" type="button" data-like="what-is-paritylk" data-like-base="34"
+              aria-pressed="false">
+              <span class="like-heart" aria-hidden="true">&#9829;</span>
+              <span class="like-count">34</span>
+              <span class="sr-only">likes</span>
+            </button>
+            <p class="like-note">Found this useful? A like tells us what to write more of.</p>
+          </div>
+        </div>
+
+        <div class="container article-related">
+          <div class="article-related-head">
+            <p class="eyebrow">Keep reading</p>
+            <h2>More from the blog</h2>
+          </div>
+          <div class="blog-grid">
+          <article class="blog-card">
+            <a class="blog-card-media" href="/blog/introduction-to-digital-marketing/" tabindex="-1" aria-hidden="true">
+              <img src="assets/images/hero/hero-content.png" alt="" loading="lazy">
+            </a>
+            <div class="blog-card-body">
+              <div class="blog-meta">
+                <span class="blog-chip">Marketing</span>
+                <span>28 July 2026</span>
+                <span>8 min read</span>
+              </div>
+              <h3><a href="/blog/introduction-to-digital-marketing/">Introduction to digital marketing</a></h3>
+              <p>The channels, the funnel, and the handful of numbers worth tracking &mdash; a beginner's map for anyone about to spend their first marketing budget.</p>
+              <span class="summary-more">Read article</span>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <a class="blog-card-media" href="/blog/website-or-mobile-app-first/" tabindex="-1" aria-hidden="true">
+              <img src="assets/images/hero/hero-mobile-apps.png" alt="" loading="lazy">
+            </a>
+            <div class="blog-card-body">
+              <div class="blog-meta">
+                <span class="blog-chip">Guides</span>
+                <span>21 July 2026</span>
+                <span>7 min read</span>
+              </div>
+              <h3><a href="/blog/website-or-mobile-app-first/">Website or mobile app: which should you build first?</a></h3>
+              <p>Apps feel like the serious choice, but they are usually the second one. How to tell which your business actually needs right now.</p>
+              <span class="summary-more">Read article</span>
+            </div>
+          </article>
+          </div>
         </div>
 
         <div class="container">

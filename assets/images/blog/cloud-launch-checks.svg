@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img" aria-label="Launch checklist covering DNS, SSL, redirects, environment variables and backups.">
+  <rect width="1200" height="560" fill="#fffdf6"/>
+  <g font-family="'Plus Jakarta Sans',sans-serif">
+    <text x="60" y="76" font-size="34" font-weight="800" fill="#111111">The five that cause most outages</text>
+    <text x="60" y="112" font-size="20" fill="#5d5644">Configuration, not code.</text>
+
+    <g>
+      <rect x="60" y="150" width="1080" height="66" rx="12" fill="#ffffff" stroke="#ded5bd"/>
+      <circle cx="104" cy="183" r="16" fill="#f6c90e"/>
+      <path d="M96 183 l6 7 l13 -14" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="142" y="190" font-size="20" font-weight="700" fill="#111111">DNS points at the live server</text>
+      <text x="1120" y="190" font-size="15" font-weight="700" fill="#5d5644" text-anchor="end">after every migration</text>
+    </g>
+
+    <g>
+      <rect x="60" y="230" width="1080" height="66" rx="12" fill="#ffffff" stroke="#ded5bd"/>
+      <circle cx="104" cy="263" r="16" fill="#f6c90e"/>
+      <path d="M96 263 l6 7 l13 -14" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="142" y="270" font-size="20" font-weight="700" fill="#111111">SSL renews automatically</text>
+      <text x="1120" y="270" font-size="15" font-weight="700" fill="#5d5644" text-anchor="end">check the expiry date</text>
+    </g>
+
+    <g>
+      <rect x="60" y="310" width="1080" height="66" rx="12" fill="#ffffff" stroke="#ded5bd"/>
+      <circle cx="104" cy="343" r="16" fill="#f6c90e"/>
+      <path d="M96 343 l6 7 l13 -14" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="142" y="350" font-size="20" font-weight="700" fill="#111111">One canonical domain, no loops</text>
+      <text x="1120" y="350" font-size="15" font-weight="700" fill="#5d5644" text-anchor="end">www or bare, pick one</text>
+    </g>
+
+    <g>
+      <rect x="60" y="390" width="1080" height="66" rx="12" fill="#ffffff" stroke="#ded5bd"/>
+      <circle cx="104" cy="423" r="16" fill="#f6c90e"/>
+      <path d="M96 423 l6 7 l13 -14" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="142" y="430" font-size="20" font-weight="700" fill="#111111">Production environment variables set</text>
+      <text x="1120" y="430" font-size="15" font-weight="700" fill="#5d5644" text-anchor="end">not just locally</text>
+    </g>
+
+    <g>
+      <rect x="60" y="470" width="1080" height="66" rx="12" fill="#ffffff" stroke="#ded5bd"/>
+      <circle cx="104" cy="503" r="16" fill="#f6c90e"/>
+      <path d="M96 503 l6 7 l13 -14" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="142" y="510" font-size="20" font-weight="700" fill="#111111">Backups and billing alerts on</text>
+      <text x="1120" y="510" font-size="15" font-weight="700" fill="#5d5644" text-anchor="end">before launch day</text>
+    </g>
+  </g>
+</svg>

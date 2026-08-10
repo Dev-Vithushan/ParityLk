@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="1200" height="520" role="img" aria-label="Six ParityLk service areas grouped into build, publish and keep running.">
+  <rect width="1200" height="520" fill="#fffdf6"/>
+  <g font-family="'Plus Jakarta Sans',sans-serif">
+    <text x="60" y="72" font-size="34" font-weight="800" fill="#111111">Six areas, three phases</text>
+    <text x="60" y="108" font-size="20" fill="#5d5644">Most projects touch two or three of these.</text>
+
+    <g font-size="15" font-weight="800" fill="#5f4900" letter-spacing="2">
+      <text x="60" y="168">BUILD</text>
+      <text x="450" y="168">PUBLISH</text>
+      <text x="840" y="168">KEEP RUNNING</text>
+    </g>
+
+    <rect x="60" y="188" width="300" height="120" rx="14" fill="#f6c90e"/>
+    <text x="90" y="238" font-size="21" font-weight="800" fill="#111111">Website development</text>
+    <text x="90" y="270" font-size="16" fill="#3a2f0d">sites, landing and service pages</text>
+
+    <rect x="60" y="324" width="300" height="120" rx="14" fill="#ffe066"/>
+    <text x="90" y="374" font-size="21" font-weight="800" fill="#111111">Mobile app builds</text>
+    <text x="90" y="406" font-size="16" fill="#3a2f0d">screens, prototypes, portals</text>
+
+    <rect x="450" y="188" width="300" height="120" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+    <text x="480" y="238" font-size="21" font-weight="800" fill="#111111">Deployment setup</text>
+    <text x="480" y="270" font-size="16" fill="#5d5644">hosting, domains, SSL, checks</text>
+
+    <rect x="450" y="324" width="300" height="120" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+    <text x="480" y="374" font-size="21" font-weight="800" fill="#111111">Content creation</text>
+    <text x="480" y="406" font-size="16" fill="#5d5644">posts, copy, publishing plan</text>
+
+    <rect x="840" y="188" width="300" height="120" rx="14" fill="#111111"/>
+    <text x="870" y="238" font-size="21" font-weight="800" fill="#f6c90e">Software support</text>
+    <text x="870" y="270" font-size="16" fill="#ffffff" opacity=".8">updates, bug fixes, user help</text>
+
+    <rect x="840" y="324" width="300" height="120" rx="14" fill="#1d1d1d"/>
+    <text x="870" y="374" font-size="21" font-weight="800" fill="#f6c90e">Monitoring</text>
+    <text x="870" y="406" font-size="16" fill="#ffffff" opacity=".8">uptime, issues, verification</text>
+  </g>
+</svg>

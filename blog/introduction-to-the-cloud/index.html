@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/">
+    <title>Introduction to the cloud | Parity Lk</title>
+    <meta name="description" content="What the cloud actually is, the three service models, what you pay for, and the handful of settings that decide whether your site stays up.">
+    <link rel="canonical" href="https://paritylk.com/blog/introduction-to-the-cloud/">
+    <meta name="theme-color" content="#111111">
+    <meta property="og:title" content="Introduction to the cloud">
+    <meta property="og:description" content="What the cloud actually is, the three service models, what you pay for, and the handful of settings that decide whether your site stays up.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="assets/images/hero/hero-cloud.png">
+    <meta property="article:published_time" content="2026-08-10">
+    <link rel="icon" href="assets/images/paritylk-favicon.png?v=4" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="assets/css/styles.css?v=multipage-1">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <div class="container header-inner">
+        <a class="brand" href="/" aria-label="ParityLk home">
+          <img
+            class="brand-logo"
+            src="assets/images/paritylk-navbar-logo.png"
+            width="128"
+            height="54"
+            alt=""
+            aria-hidden="true"
+          >
+        </a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span class="nav-toggle-line"></span>
+          <span class="nav-toggle-line"></span>
+          <span class="sr-only">Toggle navigation</span>
+        </button>
+
+        <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+          <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/services/">Services</a>
+            <a href="/cloud/">Cloud</a>
+            <a href="/support/">Support</a>
+            <a href="/courses/">Courses</a>
+            <a href="/careers/">Careers</a>
+            <a href="/blog/" aria-current="page">Blogs</a>
+          </div>
+          <a class="nav-cta" href="/contact/">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <article class="article" data-article>
+        <div class="reading-progress" data-reading-progress aria-hidden="true">
+          <span class="reading-ring"></span>
+          <span class="reading-value" data-reading-value>0%</span>
+        </div>
+
+        <section class="page-hero article-head" aria-labelledby="page-title">
+          <div class="container article-head-inner">
+            <a class="article-back" href="/blog/">All articles</a>
+
+            <figure class="article-hero-media">
+              <img src="assets/images/hero/hero-cloud.png" alt="Cloud deployment workspace showing server nodes, containers, and configuration panels." width="1672" height="941">
+              <figcaption class="article-hero-overlay">
+                <h1 id="page-title">Introduction to the cloud</h1>
+                <p class="article-lede">What the cloud actually is, the three service models, what you pay for, and the handful of settings that decide whether your site stays up.</p>
+              </figcaption>
+            </figure>
+
+            <div class="article-topbar">
+              <span class="blog-chip">Cloud</span>
+              <span class="article-meta">10 August 2026</span>
+              <span class="article-meta">9 min read</span>
+            </div>
+          </div>
+        </section>
+
+        <div class="container article-body">
+
+            <h2>Someone else's computer, rented by the minute</h2>
+            <p>
+              The cloud is a set of computers in data centres that you rent instead of buy. That
+              is the whole idea. Everything else &mdash; the acronyms, the pricing calculators, the
+              certification tracks &mdash; is detail layered on top of renting compute, storage, and
+              network capacity from a company that runs it at scale.
+            </p>
+            <p>
+              What makes it different from a server under a desk is not the hardware. It is that
+              capacity arrives in minutes rather than weeks, you pay for what you use, and someone
+              else handles the power, cooling, and failed disks.
+            </p>
+
+            <h2>The three service models</h2>
+            <p>
+              Nearly every cloud product fits one of three shapes, and the difference is simply how
+              much of the stack you still manage:
+            </p>
+            <ul>
+              <li>
+                <strong>Infrastructure as a Service (IaaS)</strong> &mdash; you rent raw machines and
+                disks. Maximum control, maximum responsibility: patching, scaling, and security
+                are yours.
+              </li>
+              <li>
+                <strong>Platform as a Service (PaaS)</strong> &mdash; you hand over code and the
+                platform runs it. No servers to patch, less control over the environment.
+              </li>
+              <li>
+                <strong>Software as a Service (SaaS)</strong> &mdash; you just use the finished
+                product. Gmail and Google Workspace are SaaS; you manage accounts, nothing more.
+              </li>
+            </ul>
+            <p>
+              Most small businesses need far less IaaS than they expect. A static site on managed
+              hosting with a CDN in front of it is cheaper, faster, and harder to break than a
+              virtual machine you have to maintain.
+            </p>
+
+            <figure class="article-figure">
+              <img src="assets/images/blog/cloud-service-models.svg" alt="Chart comparing IaaS, PaaS and SaaS by which layers you manage." loading="lazy" width="1200" height="620">
+              <figcaption>The less of the stack you manage, the fewer things there are to keep patched.</figcaption>
+            </figure>
+
+            <h2>The three big providers</h2>
+            <p>
+              AWS, Microsoft Azure, and Google Cloud dominate, and for most projects the choice
+              matters less than people think. The deciding factors are usually practical:
+            </p>
+            <ul>
+              <li><strong>AWS</strong> &mdash; the widest service catalogue and the most documentation and community answers.</li>
+              <li><strong>Azure</strong> &mdash; the natural fit if your organisation already runs Microsoft 365 and Active Directory.</li>
+              <li><strong>Google Cloud</strong> &mdash; strong on data, analytics, and container tooling.</li>
+            </ul>
+            <div class="cloud-providers article-logos" aria-label="Cloud platforms we work with">
+              <span class="cloud-provider">
+                <img src="assets/images/cloud/aws.svg" width="512" height="307" alt="Amazon Web Services logo" loading="lazy">
+              </span>
+              <span class="cloud-provider">
+                <img src="assets/images/cloud/azure.svg" width="187" height="54" alt="Microsoft Azure logo" loading="lazy">
+              </span>
+              <span class="cloud-provider">
+                <img src="assets/images/cloud/gcp.svg" width="512" height="79" alt="Google Cloud logo" loading="lazy">
+              </span>
+            </div>
+
+            <p>
+              Pick the one your team can actually operate. A well-run setup on any of the three
+              beats a neglected setup on the one with the best marketing.
+            </p>
+
+            <h2>The pieces you will actually touch</h2>
+            <p>
+              A typical website or app touches a small, predictable set of services:
+            </p>
+            <ul>
+              <li><strong>Compute</strong> &mdash; where your code runs: a virtual machine, a container, or a serverless function.</li>
+              <li><strong>Storage</strong> &mdash; object storage for images, uploads, and backups, billed by the gigabyte.</li>
+              <li><strong>Database</strong> &mdash; a managed engine so backups and failover are not your problem.</li>
+              <li><strong>DNS</strong> &mdash; the records that point your domain at all of the above.</li>
+              <li><strong>CDN</strong> &mdash; caches copies of your site near your visitors, which is the single biggest speed win for an audience spread across regions.</li>
+              <li><strong>Certificates</strong> &mdash; the SSL that puts the padlock in the address bar.</li>
+            </ul>
+
+            <figure class="article-figure">
+              <img src="assets/images/blog/cloud-launch-checks.svg" alt="Checklist of DNS, SSL, redirects, environment variables and backups." loading="lazy" width="1200" height="560">
+              <figcaption>Five configuration checks that prevent most small-site outages.</figcaption>
+            </figure>
+
+            <h2>What you are really paying for</h2>
+            <p>
+              Cloud billing catches people out because it is metered rather than fixed. The
+              recurring surprises are almost always the same three:
+            </p>
+            <ul>
+              <li><strong>Egress</strong> &mdash; moving data out of the provider costs money; moving it in usually does not.</li>
+              <li><strong>Idle resources</strong> &mdash; a machine you provisioned for a test in March is still billing in August.</li>
+              <li><strong>Over-provisioning</strong> &mdash; paying for capacity sized to a traffic spike that has not happened yet.</li>
+            </ul>
+            <p>
+              Set a billing alert on day one. It takes two minutes and it is the difference between
+              noticing a mistake at ten dollars and noticing it at three hundred.
+            </p>
+
+            <figure class="article-figure">
+              <img src="assets/images/blog/cloud-costs.svg" alt="Chart of egress, idle resources and over-provisioning as sources of cloud cost." loading="lazy" width="1200" height="520">
+              <figcaption>Alerts on billing and uptime are the two to configure before launch day.</figcaption>
+            </figure>
+
+            <h2>The settings that decide whether you stay up</h2>
+            <p>
+              In our experience most outages on small sites are not code failures. They are
+              configuration:
+            </p>
+            <ul>
+              <li>DNS records pointing at an old server after a migration.</li>
+              <li>An SSL certificate that expired because nothing was set to renew it.</li>
+              <li>A redirect loop between the www and non-www versions of a domain.</li>
+              <li>Environment variables that exist locally and were never set in production.</li>
+              <li>Storage permissions left open, or locked so tight the app cannot read its own files.</li>
+            </ul>
+            <p>
+              None of these are difficult. They are simply easy to forget, which is why a launch
+              checklist matters more than deep provider knowledge.
+            </p>
+
+            <h2>A reasonable starting point</h2>
+            <ul>
+              <li><strong>Static or brochure site:</strong> managed static hosting plus a CDN and automatic SSL. Cheap, fast, very little to break.</li>
+              <li><strong>Site with a backend:</strong> a managed platform for the app and a managed database. Skip raw virtual machines until you have a reason.</li>
+              <li><strong>Mobile app backend:</strong> managed APIs and storage, with alerting from the first release rather than the first outage.</li>
+            </ul>
+            <p>
+              Whichever route you take, get three things in place before launch: automated
+              backups, a billing alert, and an uptime check that tells you about a problem before
+              a customer does.
+            </p>
+
+            <h2>If the cloud part is the blocker</h2>
+            <p>
+              Configuration is the piece most teams would rather hand over, and it is a large part
+              of what we do &mdash; hosting, DNS, SSL, redirects, storage, access, and environments on
+              AWS, Azure, or Google Cloud, then maintenance so it keeps working after launch. If
+              something is live and broken right now, send the error and the environment details.
+            </p>
+        
+        </div>
+
+        <div class="container article-related">
+          <div class="article-related-head">
+            <p class="eyebrow">Keep reading</p>
+            <h2>More from the blog</h2>
+          </div>
+          <div class="blog-grid">
+          <article class="blog-card">
+            <a class="blog-card-media" href="/blog/what-is-paritylk/" tabindex="-1" aria-hidden="true">
+              <img src="assets/images/hero/hero-websites.png" alt="" loading="lazy">
+            </a>
+            <div class="blog-card-body">
+              <div class="blog-meta">
+                <span class="blog-chip">Company</span>
+                <span>4 August 2026</span>
+                <span>6 min read</span>
+              </div>
+              <h3><a href="/blog/what-is-paritylk/">What is ParityLk, and what do we actually do?</a></h3>
+              <p>A plain explanation of who we are, the work we take on, and how a project moves from a first message to something live and supported.</p>
+              <span class="summary-more">Read article</span>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <a class="blog-card-media" href="/blog/introduction-to-digital-marketing/" tabindex="-1" aria-hidden="true">
+              <img src="assets/images/hero/hero-content.png" alt="" loading="lazy">
+            </a>
+            <div class="blog-card-body">
+              <div class="blog-meta">
+                <span class="blog-chip">Marketing</span>
+                <span>28 July 2026</span>
+                <span>8 min read</span>
+              </div>
+              <h3><a href="/blog/introduction-to-digital-marketing/">Introduction to digital marketing</a></h3>
+              <p>The channels, the funnel, and the handful of numbers worth tracking &mdash; a beginner's map for anyone about to spend their first marketing budget.</p>
+              <span class="summary-more">Read article</span>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <a class="blog-card-media" href="/blog/website-or-mobile-app-first/" tabindex="-1" aria-hidden="true">
+              <img src="assets/images/hero/hero-mobile-apps.png" alt="" loading="lazy">
+            </a>
+            <div class="blog-card-body">
+              <div class="blog-meta">
+                <span class="blog-chip">Guides</span>
+                <span>21 July 2026</span>
+                <span>7 min read</span>
+              </div>
+              <h3><a href="/blog/website-or-mobile-app-first/">Website or mobile app: which should you build first?</a></h3>
+              <p>Apps feel like the serious choice, but they are usually the second one. How to tell which your business actually needs right now.</p>
+              <span class="summary-more">Read article</span>
+            </div>
+          </article>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="cta-band">
+            <div>
+              <h2>Want this kind of work for your business?</h2>
+              <p>Send a short brief about what you want to build, learn, or fix. We reply within one business day.</p>
+            </div>
+            <div class="cta-actions">
+              <a class="button button-primary" href="/contact/">Start a project</a>
+              <a class="button button-secondary" href="/blog/">More articles</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer" aria-labelledby="footer-title">
+      <div class="container footer-main">
+        <div class="footer-brand">
+          <a class="footer-logo" href="/" aria-label="ParityLk home">
+            <img
+              src="assets/images/paritylk-navbar-logo.png"
+              width="128"
+              height="54"
+              alt=""
+              aria-hidden="true"
+            >
+          </a>
+          <h2 id="footer-title">Digital delivery for growing teams.</h2>
+          <p>
+            Websites, mobile apps, social content, deployments, monitoring, and practical
+            software support for companies that need reliable execution.
+          </p>
+        </div>
+
+        <nav class="footer-links" aria-label="Footer navigation">
+          <div>
+            <h3>Explore</h3>
+            <a href="/services/">Services</a>
+            <a href="/cloud/">Cloud</a>
+            <a href="/support/">Our work</a>
+            <a href="/courses/">Courses</a>
+            <a href="/careers/">Careers</a>
+            <a href="/blog/">Blogs</a>
+          </div>
+          <div>
+            <h3>Services</h3>
+            <a href="/services/">Websites</a>
+            <a href="/services/">Mobile apps</a>
+            <a href="/services/">Content creation</a>
+            <a href="/services/">Monitoring</a>
+          </div>
+          <div>
+            <h3>Careers</h3>
+            <a href="/careers/">React Native Intern</a>
+            <a href="/careers/">Flutter Intern</a>
+            <a href="https://forms.gle/r8dBgu6D9do1oTmeA" target="_blank" rel="noopener">Apply interest</a>
+          </div>
+          <div>
+            <h3>Contact</h3>
+            <a href="mailto:info@paritylk.com">info@paritylk.com</a>
+            <a href="/contact/">Request a consultation</a>
+            <a href="/">Home</a>
+          </div>
+        </nav>
+      </div>
+
+      <div class="container footer-bottom">
+        <p>&copy; <span data-year></span> ParityLk. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="assets/js/main.js?v=multipage-1"></script>
+  </body>
+</html>

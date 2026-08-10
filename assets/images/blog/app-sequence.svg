@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440" width="1200" height="440" role="img" aria-label="Sequence: launch a responsive website, watch what people repeat, then build a focused app around that habit.">
+  <rect width="1200" height="440" fill="#fffdf6"/>
+  <g font-family="'Plus Jakarta Sans',sans-serif">
+    <text x="60" y="72" font-size="34" font-weight="800" fill="#111111">The order that usually works</text>
+    <text x="60" y="108" font-size="20" fill="#5d5644">The app is a second project, built on evidence.</text>
+
+    <rect x="60" y="160" width="320" height="180" rx="16" fill="#f6c90e"/>
+    <text x="92" y="212" font-size="24" font-weight="800" fill="#111111">1. Ship the site</text>
+    <text x="92" y="248" font-size="17" fill="#3a2f0d">responsive, whole journey</text>
+    <text x="92" y="276" font-size="17" fill="#3a2f0d">works on a phone</text>
+
+    <path d="M396 250 H452" stroke="#b88900" stroke-width="3"/>
+    <path d="M440 240 L456 250 L440 260 Z" fill="#b88900"/>
+
+    <rect x="468" y="160" width="320" height="180" rx="16" fill="#ffffff" stroke="#ded5bd"/>
+    <text x="500" y="212" font-size="24" font-weight="800" fill="#111111">2. Watch usage</text>
+    <text x="500" y="248" font-size="17" fill="#5d5644">which page do they</text>
+    <text x="500" y="276" font-size="17" fill="#5d5644">return to, week after week</text>
+
+    <path d="M804 250 H860" stroke="#b88900" stroke-width="3"/>
+    <path d="M848 240 L864 250 L848 260 Z" fill="#b88900"/>
+
+    <rect x="876" y="160" width="264" height="180" rx="16" fill="#111111"/>
+    <text x="908" y="212" font-size="24" font-weight="800" fill="#f6c90e">3. Build the app</text>
+    <text x="908" y="248" font-size="17" fill="#ffffff" opacity=".82">around that one habit,</text>
+    <text x="908" y="276" font-size="17" fill="#ffffff" opacity=".82">not the whole site</text>
+
+    <text x="60" y="404" font-size="17" font-weight="700" fill="#5f4900">Behaviour tells you what the app should be. A guess does not.</text>
+  </g>
+</svg>

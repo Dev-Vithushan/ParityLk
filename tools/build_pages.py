@@ -139,7 +139,6 @@ SHELL = """<!doctype html>
           <a class="nav-cta" href="/contact/"{cta_current}>Contact</a>
         </nav>
       </div>
-      <div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
     </header>
 
     <main id="main">
@@ -872,7 +871,6 @@ ARTICLE = """<!doctype html>
           <a class="nav-cta" href="/contact/">Contact</a>
         </nav>
       </div>
-      <div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
     </header>
 
     <main id="main">

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="Comparison of IaaS, PaaS and SaaS showing which layers you manage.">
+  <rect width="1200" height="620" fill="#fffdf6"/>
+  <g font-family="'Plus Jakarta Sans',sans-serif">
+    <text x="60" y="72" font-size="34" font-weight="800" fill="#111111">Who manages what</text>
+    <text x="60" y="108" font-size="20" fill="#5d5644">Yellow is yours to run. Grey is handled for you.</text>
+
+    <g font-size="17" font-weight="700" fill="#5d5644">
+      <text x="60" y="176">LAYER</text>
+      <text x="392" y="176" text-anchor="middle">IaaS</text>
+      <text x="672" y="176" text-anchor="middle">PaaS</text>
+      <text x="952" y="176" text-anchor="middle">SaaS</text>
+    </g>
+
+    <g font-size="18">
+      <text x="60" y="232" fill="#111111">Application</text>
+      <text x="60" y="292" fill="#111111">Runtime</text>
+      <text x="60" y="352" fill="#111111">Operating system</text>
+      <text x="60" y="412" fill="#111111">Virtual machines</text>
+      <text x="60" y="472" fill="#111111">Servers and network</text>
+      <text x="60" y="532" fill="#111111">Data centre</text>
+    </g>
+
+    <g>
+      <rect x="292" y="206" width="200" height="42" rx="8" fill="#f6c90e"/>
+      <rect x="292" y="266" width="200" height="42" rx="8" fill="#f6c90e"/>
+      <rect x="292" y="326" width="200" height="42" rx="8" fill="#f6c90e"/>
+      <rect x="292" y="386" width="200" height="42" rx="8" fill="#f6c90e"/>
+      <rect x="292" y="446" width="200" height="42" rx="8" fill="#e6e2d4"/>
+      <rect x="292" y="506" width="200" height="42" rx="8" fill="#e6e2d4"/>
+
+      <rect x="572" y="206" width="200" height="42" rx="8" fill="#f6c90e"/>
+      <rect x="572" y="266" width="200" height="42" rx="8" fill="#e6e2d4"/>
+      <rect x="572" y="326" width="200" height="42" rx="8" fill="#e6e2d4"/>
+      <rect x="572" y="386" width="200" height="42" rx="8" fill="#e6e2d4"/>
+      <rect x="572" y="446" width="200" height="42" rx="8" fill="#e6e2d4"/>
+      <rect x="572" y="506" width="200" height="42" rx="8" fill="#e6e2d4"/>
+
+      <rect x="852" y="206" width="200" height="42" rx="8" fill="#e6e2d4"/>
+      <rect x="852" y="266" width="200" height="42" rx="8" fill="#e6e2d4"/>
+      <rect x="852" y="326" width="200" height="42" rx="8" fill="#e6e2d4"/>
+      <rect x="852" y="386" width="200" height="42" rx="8" fill="#e6e2d4"/>
+      <rect x="852" y="446" width="200" height="42" rx="8" fill="#e6e2d4"/>
+      <rect x="852" y="506" width="200" height="42" rx="8" fill="#e6e2d4"/>
+    </g>
+
+    <g font-size="15" font-weight="700" fill="#5f4900">
+      <text x="392" y="580" text-anchor="middle">Most control</text>
+      <text x="672" y="580" text-anchor="middle">Middle ground</text>
+      <text x="952" y="580" text-anchor="middle">Least upkeep</text>
+    </g>
+  </g>
+</svg>

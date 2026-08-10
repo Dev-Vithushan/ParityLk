@@ -17,7 +17,6 @@ const animatedElements = document.querySelectorAll(
   ".proof-grid > div, .section-heading, .summary-card, .service-card, .course-card, .career-card, .cloud-checklist > article, .support-panel, .launch-stats > div, .contact-form, .cta-band, .blog-card"
 );
 const header = document.querySelector("[data-header]");
-const scrollProgress = document.querySelector("[data-scroll-progress]");
 const hero = document.querySelector(".hero");
 const heroContent = document.querySelector(".hero-content");
 const counters = document.querySelectorAll("[data-count-to]");
@@ -151,7 +150,7 @@ if (animatedElements.length) {
   }
 }
 
-if (header || scrollProgress || heroContent || readingProgress) {
+if (header || heroContent || readingProgress) {
   let scrollTicking = false;
 
   const renderScroll = () => {
@@ -160,12 +159,6 @@ if (header || scrollProgress || heroContent || readingProgress) {
 
     if (header) {
       header.classList.toggle("is-scrolled", scrolled > 24);
-    }
-
-    if (scrollProgress) {
-      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = scrollable > 0 ? Math.min(scrolled / scrollable, 1) : 0;
-      scrollProgress.style.setProperty("--progress", progress.toFixed(4));
     }
 
     if (heroContent && hero && !prefersReducedMotion.matches) {

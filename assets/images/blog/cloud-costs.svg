@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="1200" height="520" role="img" aria-label="The three recurring sources of surprise cloud costs: egress, idle resources and over-provisioning.">
+  <rect width="1200" height="520" fill="#fffdf6"/>
+  <g font-family="'Plus Jakarta Sans',sans-serif">
+    <text x="60" y="72" font-size="34" font-weight="800" fill="#111111">Where the bill actually comes from</text>
+    <text x="60" y="108" font-size="20" fill="#5d5644">Metered, not fixed. These three cause most surprises.</text>
+
+    <g>
+      <rect x="60" y="170" width="1080" height="86" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+      <rect x="60" y="170" width="470" height="86" rx="14" fill="#f6c90e"/>
+      <text x="96" y="212" font-size="22" font-weight="800" fill="#111111">Egress</text>
+      <text x="96" y="240" font-size="16" fill="#3a2f0d">data leaving the provider</text>
+      <text x="1104" y="222" font-size="16" font-weight="700" fill="#5d5644" text-anchor="end">in is free, out is not</text>
+    </g>
+
+    <g>
+      <rect x="60" y="276" width="1080" height="86" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+      <rect x="60" y="276" width="720" height="86" rx="14" fill="#ffb000"/>
+      <text x="96" y="318" font-size="22" font-weight="800" fill="#111111">Idle resources</text>
+      <text x="96" y="346" font-size="16" fill="#3a2f0d">the test machine from March</text>
+      <text x="1104" y="328" font-size="16" font-weight="700" fill="#5d5644" text-anchor="end">still billing in August</text>
+    </g>
+
+    <g>
+      <rect x="60" y="382" width="1080" height="86" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+      <rect x="60" y="382" width="330" height="86" rx="14" fill="#ffe066"/>
+      <text x="96" y="424" font-size="22" font-weight="800" fill="#111111">Over-provisioning</text>
+      <text x="96" y="452" font-size="16" fill="#3a2f0d">capacity for a spike that has not come</text>
+      <text x="1104" y="434" font-size="16" font-weight="700" fill="#5d5644" text-anchor="end">size it later</text>
+    </g>
+
+    <text x="60" y="502" font-size="17" font-weight="700" fill="#5f4900">Set a billing alert on day one. Two minutes, and it catches all three.</text>
+  </g>
+</svg>

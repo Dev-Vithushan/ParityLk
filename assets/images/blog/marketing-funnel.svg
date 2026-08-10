@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600" role="img" aria-label="Marketing funnel from awareness to retention with the metric that matters at each stage.">
+  <rect width="1200" height="600" fill="#fffdf6"/>
+  <g font-family="'Plus Jakarta Sans',sans-serif">
+    <text x="60" y="74" font-size="34" font-weight="800" fill="#111111">Four stages, four different jobs</text>
+    <text x="60" y="110" font-size="20" fill="#5d5644">Most wasted budget is a message aimed at the wrong stage.</text>
+
+    <path d="M120 160 H760 L700 250 H180 Z" fill="#f6c90e"/>
+    <path d="M180 262 H700 L648 352 H232 Z" fill="#f2bc12"/>
+    <path d="M232 364 H648 L596 454 H284 Z" fill="#e0a900"/>
+    <path d="M284 466 H596 L544 556 H336 Z" fill="#b88900"/>
+
+    <g font-size="21" font-weight="800" fill="#111111">
+      <text x="440" y="212" text-anchor="middle">AWARENESS</text>
+      <text x="440" y="314" text-anchor="middle">CONSIDERATION</text>
+      <text x="440" y="416" text-anchor="middle">CONVERSION</text>
+      <text x="440" y="518" text-anchor="middle" fill="#fffdf6">RETENTION</text>
+    </g>
+
+    <g font-size="18" fill="#5d5644">
+      <text x="820" y="212">They learn you exist</text>
+      <text x="820" y="314">They compare you</text>
+      <text x="820" y="416">They buy or enquire</text>
+      <text x="820" y="518">They return and refer</text>
+    </g>
+    <g font-size="14" font-weight="700" fill="#5f4900">
+      <text x="820" y="238">Measure: reach</text>
+      <text x="820" y="340">Measure: time on page</text>
+      <text x="820" y="442">Measure: conversion rate</text>
+      <text x="820" y="544">Measure: repeat customers</text>
+    </g>
+  </g>
+</svg>

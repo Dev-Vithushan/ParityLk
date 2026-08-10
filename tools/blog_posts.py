@@ -2,6 +2,167 @@
 
 POSTS = [
     {
+        "slug": "introduction-to-the-cloud",
+        "title": "Introduction to the cloud",
+        "category": "Cloud",
+        "date": "2026-08-10",
+        "date_label": "10 August 2026",
+        "read": "9 min read",
+        "image": "assets/images/hero/hero-cloud.png",
+        "image_alt": "Cloud deployment workspace showing server nodes, containers, and configuration panels.",
+        "excerpt": (
+            "What the cloud actually is, the three service models, what you pay for, "
+            "and the handful of settings that decide whether your site stays up."
+        ),
+        "body": """
+            <h2>Someone else's computer, rented by the minute</h2>
+            <p>
+              The cloud is a set of computers in data centres that you rent instead of buy. That
+              is the whole idea. Everything else &mdash; the acronyms, the pricing calculators, the
+              certification tracks &mdash; is detail layered on top of renting compute, storage, and
+              network capacity from a company that runs it at scale.
+            </p>
+            <p>
+              What makes it different from a server under a desk is not the hardware. It is that
+              capacity arrives in minutes rather than weeks, you pay for what you use, and someone
+              else handles the power, cooling, and failed disks.
+            </p>
+
+            <h2>The three service models</h2>
+            <p>
+              Nearly every cloud product fits one of three shapes, and the difference is simply how
+              much of the stack you still manage:
+            </p>
+            <ul>
+              <li>
+                <strong>Infrastructure as a Service (IaaS)</strong> &mdash; you rent raw machines and
+                disks. Maximum control, maximum responsibility: patching, scaling, and security
+                are yours.
+              </li>
+              <li>
+                <strong>Platform as a Service (PaaS)</strong> &mdash; you hand over code and the
+                platform runs it. No servers to patch, less control over the environment.
+              </li>
+              <li>
+                <strong>Software as a Service (SaaS)</strong> &mdash; you just use the finished
+                product. Gmail and Google Workspace are SaaS; you manage accounts, nothing more.
+              </li>
+            </ul>
+            <p>
+              Most small businesses need far less IaaS than they expect. A static site on managed
+              hosting with a CDN in front of it is cheaper, faster, and harder to break than a
+              virtual machine you have to maintain.
+            </p>
+
+            <figure class="article-figure">
+              <img src="assets/images/blog/cloud-service-models.svg" alt="Chart comparing IaaS, PaaS and SaaS by which layers you manage." loading="lazy" width="1200" height="620">
+              <figcaption>The less of the stack you manage, the fewer things there are to keep patched.</figcaption>
+            </figure>
+
+            <h2>The three big providers</h2>
+            <p>
+              AWS, Microsoft Azure, and Google Cloud dominate, and for most projects the choice
+              matters less than people think. The deciding factors are usually practical:
+            </p>
+            <ul>
+              <li><strong>AWS</strong> &mdash; the widest service catalogue and the most documentation and community answers.</li>
+              <li><strong>Azure</strong> &mdash; the natural fit if your organisation already runs Microsoft 365 and Active Directory.</li>
+              <li><strong>Google Cloud</strong> &mdash; strong on data, analytics, and container tooling.</li>
+            </ul>
+            <div class="cloud-providers article-logos" aria-label="Cloud platforms we work with">
+              <span class="cloud-provider">
+                <img src="assets/images/cloud/aws.svg" width="512" height="307" alt="Amazon Web Services logo" loading="lazy">
+              </span>
+              <span class="cloud-provider">
+                <img src="assets/images/cloud/azure.svg" width="187" height="54" alt="Microsoft Azure logo" loading="lazy">
+              </span>
+              <span class="cloud-provider">
+                <img src="assets/images/cloud/gcp.svg" width="512" height="79" alt="Google Cloud logo" loading="lazy">
+              </span>
+            </div>
+
+            <p>
+              Pick the one your team can actually operate. A well-run setup on any of the three
+              beats a neglected setup on the one with the best marketing.
+            </p>
+
+            <h2>The pieces you will actually touch</h2>
+            <p>
+              A typical website or app touches a small, predictable set of services:
+            </p>
+            <ul>
+              <li><strong>Compute</strong> &mdash; where your code runs: a virtual machine, a container, or a serverless function.</li>
+              <li><strong>Storage</strong> &mdash; object storage for images, uploads, and backups, billed by the gigabyte.</li>
+              <li><strong>Database</strong> &mdash; a managed engine so backups and failover are not your problem.</li>
+              <li><strong>DNS</strong> &mdash; the records that point your domain at all of the above.</li>
+              <li><strong>CDN</strong> &mdash; caches copies of your site near your visitors, which is the single biggest speed win for an audience spread across regions.</li>
+              <li><strong>Certificates</strong> &mdash; the SSL that puts the padlock in the address bar.</li>
+            </ul>
+
+            <figure class="article-figure">
+              <img src="assets/images/blog/cloud-launch-checks.svg" alt="Checklist of DNS, SSL, redirects, environment variables and backups." loading="lazy" width="1200" height="560">
+              <figcaption>Five configuration checks that prevent most small-site outages.</figcaption>
+            </figure>
+
+            <h2>What you are really paying for</h2>
+            <p>
+              Cloud billing catches people out because it is metered rather than fixed. The
+              recurring surprises are almost always the same three:
+            </p>
+            <ul>
+              <li><strong>Egress</strong> &mdash; moving data out of the provider costs money; moving it in usually does not.</li>
+              <li><strong>Idle resources</strong> &mdash; a machine you provisioned for a test in March is still billing in August.</li>
+              <li><strong>Over-provisioning</strong> &mdash; paying for capacity sized to a traffic spike that has not happened yet.</li>
+            </ul>
+            <p>
+              Set a billing alert on day one. It takes two minutes and it is the difference between
+              noticing a mistake at ten dollars and noticing it at three hundred.
+            </p>
+
+            <figure class="article-figure">
+              <img src="assets/images/blog/cloud-costs.svg" alt="Chart of egress, idle resources and over-provisioning as sources of cloud cost." loading="lazy" width="1200" height="520">
+              <figcaption>Alerts on billing and uptime are the two to configure before launch day.</figcaption>
+            </figure>
+
+            <h2>The settings that decide whether you stay up</h2>
+            <p>
+              In our experience most outages on small sites are not code failures. They are
+              configuration:
+            </p>
+            <ul>
+              <li>DNS records pointing at an old server after a migration.</li>
+              <li>An SSL certificate that expired because nothing was set to renew it.</li>
+              <li>A redirect loop between the www and non-www versions of a domain.</li>
+              <li>Environment variables that exist locally and were never set in production.</li>
+              <li>Storage permissions left open, or locked so tight the app cannot read its own files.</li>
+            </ul>
+            <p>
+              None of these are difficult. They are simply easy to forget, which is why a launch
+              checklist matters more than deep provider knowledge.
+            </p>
+
+            <h2>A reasonable starting point</h2>
+            <ul>
+              <li><strong>Static or brochure site:</strong> managed static hosting plus a CDN and automatic SSL. Cheap, fast, very little to break.</li>
+              <li><strong>Site with a backend:</strong> a managed platform for the app and a managed database. Skip raw virtual machines until you have a reason.</li>
+              <li><strong>Mobile app backend:</strong> managed APIs and storage, with alerting from the first release rather than the first outage.</li>
+            </ul>
+            <p>
+              Whichever route you take, get three things in place before launch: automated
+              backups, a billing alert, and an uptime check that tells you about a problem before
+              a customer does.
+            </p>
+
+            <h2>If the cloud part is the blocker</h2>
+            <p>
+              Configuration is the piece most teams would rather hand over, and it is a large part
+              of what we do &mdash; hosting, DNS, SSL, redirects, storage, access, and environments on
+              AWS, Azure, or Google Cloud, then maintenance so it keeps working after launch. If
+              something is live and broken right now, send the error and the environment details.
+            </p>
+        """,
+    },
+    {
         "slug": "what-is-paritylk",
         "title": "What is ParityLk, and what do we actually do?",
         "category": "Company",
@@ -60,8 +221,8 @@ POSTS = [
             </ul>
 
             <figure class="article-figure">
-              <img src="assets/images/paritylk-workbench.png" alt="ParityLk workbench showing a site being built and reviewed across devices." loading="lazy" width="1600" height="900">
-              <figcaption>Most projects touch two or three of these areas at once, not just one.</figcaption>
+              <img src="assets/images/blog/service-areas.svg" alt="Six service areas grouped into build, publish and keep running." loading="lazy" width="1200" height="520">
+              <figcaption>Six areas, grouped by the phase of delivery they belong to.</figcaption>
             </figure>
 
             <h2>Cloud work is its own thing</h2>
@@ -79,8 +240,8 @@ POSTS = [
             </p>
 
             <figure class="article-figure">
-              <img src="assets/images/hero/hero-cloud.png" alt="Cloud deployment workspace with server nodes, containers, and configuration panels." loading="lazy" width="1672" height="941">
-              <figcaption>DNS, SSL, and environment settings cause more outages than code does.</figcaption>
+              <img src="assets/images/blog/delivery-flow.svg" alt="Project flow from brief through scope, build, deploy and support." loading="lazy" width="1200" height="420">
+              <figcaption>Every project runs this way, whatever it is we are building.</figcaption>
             </figure>
 
             <h2>Courses, because the skills gap is real</h2>
@@ -176,8 +337,8 @@ POSTS = [
             </ul>
 
             <figure class="article-figure">
-              <img src="assets/images/hero/hero-content.png" alt="Content planning workspace with an editing timeline and publishing boards." loading="lazy" width="1672" height="941">
-              <figcaption>Two channels done properly beat six channels done badly.</figcaption>
+              <img src="assets/images/blog/marketing-funnel.svg" alt="Funnel diagram from awareness to retention with the metric for each stage." loading="lazy" width="1200" height="600">
+              <figcaption>Match the message to the stage, or the budget goes to the wrong people.</figcaption>
             </figure>
 
             <h2>The funnel, without the mystique</h2>
@@ -214,7 +375,7 @@ POSTS = [
             </p>
 
             <figure class="article-figure">
-              <img src="assets/images/hero/hero-websites.png" alt="Responsive website layouts shown across desktop, laptop, tablet, and phone." loading="lazy" width="1672" height="941">
+              <img src="assets/images/blog/marketing-channels.svg" alt="Five channels feeding traffic into a website that converts it to enquiries." loading="lazy" width="1200" height="520">
               <figcaption>Every channel eventually points at your site, which makes it the first thing to fix.</figcaption>
             </figure>
 
@@ -287,8 +448,8 @@ POSTS = [
             </ul>
 
             <figure class="article-figure">
-              <img src="assets/images/hero/hero-websites.png" alt="A responsive website shown across several screen sizes." loading="lazy" width="1672" height="941">
-              <figcaption>One responsive build covers phone, tablet, and desktop without separate work.</figcaption>
+              <img src="assets/images/blog/web-vs-app.svg" alt="Side by side comparison of what a website and a mobile app are each good at." loading="lazy" width="1200" height="560">
+              <figcaption>Each column is a genuine strength; the question is which one you need now.</figcaption>
             </figure>
 
             <h2>What an app is genuinely better at</h2>
@@ -328,8 +489,8 @@ POSTS = [
             </ul>
 
             <figure class="article-figure">
-              <img src="assets/images/hero/hero-mobile-apps.png" alt="Mobile app screens and code shown on a development workstation." loading="lazy" width="1672" height="941">
-              <figcaption>An app earns its place when someone opens it weekly, not when a competitor ships one.</figcaption>
+              <img src="assets/images/blog/app-sequence.svg" alt="Sequence from shipping a website, to watching usage, to building a focused app." loading="lazy" width="1200" height="440">
+              <figcaption>Site first, then evidence, then an app built around the habit it revealed.</figcaption>
             </figure>
 
             <h2>The sequence that usually works</h2>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="1200" height="420" role="img" aria-label="Project flow from brief to scope, build, deploy and ongoing support.">
+  <rect width="1200" height="420" fill="#fffdf6"/>
+  <g font-family="'Plus Jakarta Sans',sans-serif">
+    <text x="60" y="74" font-size="34" font-weight="800" fill="#111111">How a project runs</text>
+    <text x="60" y="110" font-size="20" fill="#5d5644">Five stages, no ceremony.</text>
+
+    <path d="M118 250 H1082" stroke="#ded5bd" stroke-width="3"/>
+    <g>
+      <circle cx="118" cy="250" r="26" fill="#f6c90e"/>
+      <circle cx="359" cy="250" r="26" fill="#f6c90e"/>
+      <circle cx="600" cy="250" r="26" fill="#f6c90e"/>
+      <circle cx="841" cy="250" r="26" fill="#f6c90e"/>
+      <circle cx="1082" cy="250" r="26" fill="#111111"/>
+    </g>
+    <g font-size="18" font-weight="800" fill="#111111" text-anchor="middle">
+      <text x="118" y="257">1</text><text x="359" y="257">2</text><text x="600" y="257">3</text>
+      <text x="841" y="257">4</text><text x="1082" y="257" fill="#f6c90e">5</text>
+    </g>
+    <g font-size="20" font-weight="700" fill="#111111" text-anchor="middle">
+      <text x="118" y="202">Brief</text><text x="359" y="202">Scope</text><text x="600" y="202">Build</text>
+      <text x="841" y="202">Deploy</text><text x="1082" y="202">Support</text>
+    </g>
+    <g font-size="15" fill="#5d5644" text-anchor="middle">
+      <text x="118" y="310">a few</text><text x="118" y="330">sentences</text>
+      <text x="359" y="310">reply within</text><text x="359" y="330">one day</text>
+      <text x="600" y="310">visible</text><text x="600" y="330">stages</text>
+      <text x="841" y="310">launch</text><text x="841" y="330">checks</text>
+      <text x="1082" y="310">monitoring</text><text x="1082" y="330">and fixes</text>
+    </g>
+  </g>
+</svg>

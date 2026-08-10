@@ -110,16 +110,6 @@ textarea {
   box-shadow: 0 1px 24px rgba(0, 0, 0, 0.28);
 }
 
-.scroll-progress {
-  position: absolute;
-  inset: auto 0 -1px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--yellow), var(--amber));
-  transform: scaleX(var(--progress, 0));
-  transform-origin: left center;
-  will-change: transform;
-}
-
 .header-inner {
   display: flex;
   align-items: center;
@@ -2289,6 +2279,16 @@ h3 {
 }
 
 
+/* provider logo row inside an article */
+.article-logos {
+  margin: 26px 0 28px;
+}
+
+.article-logos .cloud-provider {
+  width: 150px;
+  min-height: 62px;
+}
+
 /* inline figures inside an article */
 .article-figure {
   margin: 34px 0 30px;
@@ -2300,6 +2300,14 @@ h3 {
   object-fit: cover;
   border: 1px solid var(--line);
   border-radius: 14px;
+}
+
+/* diagrams must show whole, not be cropped like a photo */
+.article-figure img[src$=".svg"] {
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  background: #fffdf6;
 }
 
 .article-figure figcaption {

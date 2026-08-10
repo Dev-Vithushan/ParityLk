@@ -25,13 +25,46 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Regenerates the inner pages and every blog article from the shared
+      # shell, so publishing a post only needs an edit to tools/blog_posts.py.
+      - name: Build pages
+        run: python3 tools/build_pages.py
+
+      - name: Report drift in generated pages
+        run: |
+          if ! git diff --quiet; then
+            echo "::warning::Generated pages differed from the committed ones; deploying the freshly built version."
+            git --no-pager diff --stat
+          fi
+
+      # Stage only what belongs on the site: the generator, workflow and
+      # editor config are not part of the deployed output.
+      - name: Assemble site
+        run: |
+          mkdir -p _site
+          rsync -a \
+            --exclude '_site' \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude '.claude' \
+            --exclude 'tools' \
+            --exclude '.gitignore' \
+            ./ _site/
+          touch _site/.nojekyll
+          ls -la _site
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment

@@ -4,9 +4,11 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from visuals import VISUALS
+from page_visuals import VISUALS
+from blog_posts import POSTS
 
-ROOT = "/Users/vithushan/Documents/ParityLk"
+# repo root, so the generator runs the same locally and in CI
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VERSION = "multipage-1"
 
 NAV = [
@@ -16,6 +18,7 @@ NAV = [
     ("/support/", "Support"),
     ("/courses/", "Courses"),
     ("/careers/", "Careers"),
+    ("/blog/", "Blogs"),
 ]
 
 
@@ -27,6 +30,62 @@ def nav_markup(active):
     cta_current = ' aria-current="page"' if active == "/contact/" else ""
     return "\n".join(rows), cta_current
 
+
+FOOTER = """    <footer class="site-footer" aria-labelledby="footer-title">
+      <div class="container footer-main">
+        <div class="footer-brand">
+          <a class="footer-logo" href="/" aria-label="ParityLk home">
+            <img
+              src="assets/images/paritylk-navbar-logo.png"
+              width="128"
+              height="54"
+              alt=""
+              aria-hidden="true"
+            >
+          </a>
+          <h2 id="footer-title">Digital delivery for growing teams.</h2>
+          <p>
+            Websites, mobile apps, social content, deployments, monitoring, and practical
+            software support for companies that need reliable execution.
+          </p>
+        </div>
+
+        <nav class="footer-links" aria-label="Footer navigation">
+          <div>
+            <h3>Explore</h3>
+            <a href="/services/">Services</a>
+            <a href="/cloud/">Cloud</a>
+            <a href="/support/">Our work</a>
+            <a href="/courses/">Courses</a>
+            <a href="/careers/">Careers</a>
+            <a href="/blog/">Blogs</a>
+          </div>
+          <div>
+            <h3>Services</h3>
+            <a href="/services/">Websites</a>
+            <a href="/services/">Mobile apps</a>
+            <a href="/services/">Content creation</a>
+            <a href="/services/">Monitoring</a>
+          </div>
+          <div>
+            <h3>Careers</h3>
+            <a href="/careers/">React Native Intern</a>
+            <a href="/careers/">Flutter Intern</a>
+            <a href="https://forms.gle/r8dBgu6D9do1oTmeA" target="_blank" rel="noopener">Apply interest</a>
+          </div>
+          <div>
+            <h3>Contact</h3>
+            <a href="mailto:info@paritylk.com">info@paritylk.com</a>
+            <a href="/contact/">Request a consultation</a>
+            <a href="/">Home</a>
+          </div>
+        </nav>
+      </div>
+
+      <div class="container footer-bottom">
+        <p>&copy; <span data-year></span> ParityLk. All rights reserved.</p>
+      </div>
+    </footer>"""
 
 SHELL = """<!doctype html>
 <html lang="en">
@@ -122,60 +181,7 @@ SHELL = """<!doctype html>
 {body}
     </main>
 
-    <footer class="site-footer" aria-labelledby="footer-title">
-      <div class="container footer-main">
-        <div class="footer-brand">
-          <a class="footer-logo" href="/" aria-label="ParityLk home">
-            <img
-              src="assets/images/paritylk-navbar-logo.png"
-              width="128"
-              height="54"
-              alt=""
-              aria-hidden="true"
-            >
-          </a>
-          <h2 id="footer-title">Digital delivery for growing teams.</h2>
-          <p>
-            Websites, mobile apps, social content, deployments, monitoring, and practical
-            software support for companies that need reliable execution.
-          </p>
-        </div>
-
-        <nav class="footer-links" aria-label="Footer navigation">
-          <div>
-            <h3>Explore</h3>
-            <a href="/services/">Services</a>
-            <a href="/cloud/">Cloud</a>
-            <a href="/support/">Our work</a>
-            <a href="/courses/">Courses</a>
-            <a href="/careers/">Careers</a>
-          </div>
-          <div>
-            <h3>Services</h3>
-            <a href="/services/">Websites</a>
-            <a href="/services/">Mobile apps</a>
-            <a href="/services/">Content creation</a>
-            <a href="/services/">Monitoring</a>
-          </div>
-          <div>
-            <h3>Careers</h3>
-            <a href="/careers/">React Native Intern</a>
-            <a href="/careers/">Flutter Intern</a>
-            <a href="https://forms.gle/r8dBgu6D9do1oTmeA" target="_blank" rel="noopener">Apply interest</a>
-          </div>
-          <div>
-            <h3>Contact</h3>
-            <a href="mailto:info@paritylk.com">info@paritylk.com</a>
-            <a href="/contact/">Request a consultation</a>
-            <a href="/">Home</a>
-          </div>
-        </nav>
-      </div>
-
-      <div class="container footer-bottom">
-        <p>&copy; <span data-year></span> ParityLk. All rights reserved.</p>
-      </div>
-    </footer>
+{footer}
 
     <script src="assets/js/main.js?v={version}"></script>
   </body>
@@ -664,6 +670,20 @@ CONTACT_BODY = """      <section class="section" aria-labelledby="contact-title"
 
 PAGES = [
     {
+        "path": "/blog/",
+        "dir": "blog",
+        "title": "Blogs | Parity Lk",
+        "description": "Articles from ParityLk on digital delivery, marketing, and choosing the right build for your business.",
+        "eyebrow": "Blogs",
+        "heading": "Notes from the <span class=\"shine\">delivery desk.</span>",
+        "intro": "Practical writing on what we build and how we work \u2014 company notes, marketing basics, and guides for deciding what to build first.",
+        "actions": [
+            ('button button-primary', '/contact/', 'Start a project'),
+            ('button button-secondary', '/services/', 'View services'),
+        ],
+        "body": None,
+    },
+    {
         "path": "/services/",
         "dir": "services",
         "title": "Services | Parity Lk",
@@ -769,6 +789,137 @@ PAGES = [
 ]
 
 
+
+def blog_cards():
+    cards = []
+    for post in POSTS:
+        cards.append(f"""          <article class="blog-card">
+            <a class="blog-card-media" href="/blog/{post['slug']}/" tabindex="-1" aria-hidden="true">
+              <img src="{post['image']}" alt="" loading="lazy">
+            </a>
+            <div class="blog-card-body">
+              <div class="blog-meta">
+                <span class="blog-chip">{post['category']}</span>
+                <span>{post['date_label']}</span>
+                <span>{post['read']}</span>
+              </div>
+              <h3><a href="/blog/{post['slug']}/">{post['title']}</a></h3>
+              <p>{post['excerpt']}</p>
+              <span class="summary-more">Read article</span>
+            </div>
+          </article>""")
+    return "\n\n".join(cards)
+
+
+BLOG_INDEX_BODY = """      <section class="section" aria-label="Articles">
+        <div class="container blog-grid">
+{cards}
+        </div>
+      </section>
+
+"""
+
+ARTICLE = """<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/">
+    <title>{title} | Parity Lk</title>
+    <meta name="description" content="{excerpt_plain}">
+    <link rel="canonical" href="https://paritylk.com/blog/{slug}/">
+    <meta name="theme-color" content="#111111">
+    <meta property="og:title" content="{title}">
+    <meta property="og:description" content="{excerpt_plain}">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="{image}">
+    <meta property="article:published_time" content="{date}">
+    <link rel="icon" href="assets/images/paritylk-favicon.png?v=4" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="assets/css/styles.css?v={version}">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <div class="container header-inner">
+        <a class="brand" href="/" aria-label="ParityLk home">
+          <img
+            class="brand-logo"
+            src="assets/images/paritylk-navbar-logo.png"
+            width="128"
+            height="54"
+            alt=""
+            aria-hidden="true"
+          >
+        </a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span class="nav-toggle-line"></span>
+          <span class="nav-toggle-line"></span>
+          <span class="sr-only">Toggle navigation</span>
+        </button>
+
+        <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+          <div class="nav-links">
+{nav}
+          </div>
+          <a class="nav-cta" href="/contact/">Contact</a>
+        </nav>
+      </div>
+      <div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
+    </header>
+
+    <main id="main">
+      <article class="article">
+        <section class="page-hero" aria-labelledby="page-title">
+          <div class="fx-grid" aria-hidden="true"></div>
+          <div class="fx-line" aria-hidden="true"><span class="fx-traveler"></span></div>
+          <div class="container article-hero">
+            <a class="article-back" href="/blog/">Back to all articles</a>
+            <p class="eyebrow">{category}</p>
+            <h1 id="page-title">{title}</h1>
+            <p class="article-lede">{excerpt}</p>
+            <p class="article-meta">{date_label} &middot; {read}</p>
+          </div>
+        </section>
+
+        <div class="container article-cover">
+          <img src="{image}" alt="{image_alt}" width="1672" height="941">
+        </div>
+
+        <div class="container article-body">
+{body}
+        </div>
+
+        <div class="container">
+          <div class="cta-band">
+            <div>
+              <h2>Want this kind of work for your business?</h2>
+              <p>Send a short brief about what you want to build, learn, or fix. We reply within one business day.</p>
+            </div>
+            <div class="cta-actions">
+              <a class="button button-primary" href="/contact/">Start a project</a>
+              <a class="button button-secondary" href="/blog/">More articles</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </main>
+
+{footer}
+
+    <script src="assets/js/main.js?v={version}"></script>
+  </body>
+</html>
+"""
+
+
 def action_markup(actions):
     rows = []
     for cls, href, label in actions:
@@ -779,9 +930,12 @@ def action_markup(actions):
 
 
 for page in PAGES:
+    if page["path"] == "/blog/":
+        page["body"] = BLOG_INDEX_BODY.format(cards=blog_cards())
     nav, cta_current = nav_markup(page["path"])
     visual, badge = VISUALS[page["path"]]
     html = SHELL.format(
+        footer=FOOTER,
         visual=visual.rstrip("\n"),
         badge=badge,
         title=page["title"],
@@ -801,3 +955,28 @@ for page in PAGES:
     with open(os.path.join(out_dir, "index.html"), "w") as handle:
         handle.write(html)
     print("wrote", os.path.join(page["dir"], "index.html"))
+
+
+nav_for_blog, _ = nav_markup("/blog/")
+for post in POSTS:
+    html = ARTICLE.format(
+        version=VERSION,
+        nav=nav_for_blog,
+        footer=FOOTER,
+        slug=post["slug"],
+        title=post["title"],
+        category=post["category"],
+        date=post["date"],
+        date_label=post["date_label"],
+        read=post["read"],
+        image=post["image"],
+        image_alt=post["image_alt"],
+        excerpt=post["excerpt"],
+        excerpt_plain=post["excerpt"].replace("&mdash;", "-").replace("&nbsp;", " "),
+        body=post["body"].rstrip("\n"),
+    )
+    out_dir = os.path.join(ROOT, "blog", post["slug"])
+    os.makedirs(out_dir, exist_ok=True)
+    with open(os.path.join(out_dir, "index.html"), "w") as handle:
+        handle.write(html)
+    print("wrote", os.path.join("blog", post["slug"], "index.html"))

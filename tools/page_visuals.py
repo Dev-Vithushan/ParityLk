@@ -387,7 +387,63 @@ CONTACT = """
               </g>
 """
 
+
+BLOG = """
+              <circle class="hv-orbit" cx="230" cy="206" r="190" fill="none" stroke="url(#hvGrad)"
+                stroke-opacity=".34" stroke-width="1.3" stroke-dasharray="3 12"></circle>
+
+              <!-- three articles stacking up -->
+              <g class="hv-icon">
+                <rect x="96" y="96" width="268" height="76" rx="14" fill="#1a1810" stroke="#f6c90e"
+                  stroke-opacity=".38" stroke-width="1.4"></rect>
+                <rect x="116" y="116" width="36" height="36" rx="8" fill="#f6c90e" opacity=".85"></rect>
+                <g stroke="#f6c90e" stroke-width="2.6" stroke-linecap="round">
+                  <path d="M170 126 H320">
+                    <animate attributeName="stroke-dasharray" values="0 150;150 0" dur="2.6s" repeatCount="indefinite"></animate>
+                  </path>
+                  <path d="M170 142 H272" stroke-opacity=".5"></path>
+                </g>
+              </g>
+
+              <g class="hv-icon" style="animation-delay:1.3s">
+                <rect x="96" y="192" width="268" height="76" rx="14" fill="#1a1810" stroke="#f6c90e"
+                  stroke-opacity=".38" stroke-width="1.4"></rect>
+                <rect x="116" y="212" width="36" height="36" rx="8" fill="#ffb000" opacity=".85"></rect>
+                <g stroke="#f6c90e" stroke-width="2.6" stroke-linecap="round">
+                  <path d="M170 222 H320">
+                    <animate attributeName="stroke-dasharray" values="0 150;150 0" dur="2.6s" begin=".8s" repeatCount="indefinite"></animate>
+                  </path>
+                  <path d="M170 238 H288" stroke-opacity=".5"></path>
+                </g>
+              </g>
+
+              <g class="hv-icon" style="animation-delay:2.6s">
+                <rect x="96" y="288" width="268" height="76" rx="14" fill="#1a1810" stroke="#f6c90e"
+                  stroke-opacity=".38" stroke-width="1.4"></rect>
+                <rect x="116" y="308" width="36" height="36" rx="8" fill="#fff3b0" opacity=".8"></rect>
+                <g stroke="#f6c90e" stroke-width="2.6" stroke-linecap="round">
+                  <path d="M170 318 H320">
+                    <animate attributeName="stroke-dasharray" values="0 150;150 0" dur="2.6s" begin="1.6s" repeatCount="indefinite"></animate>
+                  </path>
+                  <path d="M170 334 H256" stroke-opacity=".5"></path>
+                </g>
+              </g>
+
+              <!-- pen nib marking the newest post -->
+              <g class="hv-icon" style="animation-delay:.6s">
+                <circle class="hv-halo" cx="366" cy="106" r="26" fill="#f6c90e" opacity=".26"></circle>
+                <circle cx="366" cy="106" r="24" fill="#1a1810" stroke="#f6c90e" stroke-opacity=".5"
+                  stroke-width="1.4"></circle>
+                <g transform="translate(366 106)" fill="none" stroke="#f6c90e" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M-8 8 L-8 3 L4 -9 L9 -4 L-3 8 Z"></path>
+                  <path d="M2 -7 L7 -2"></path>
+                </g>
+              </g>
+"""
+
 VISUALS = {
+    "/blog/": (BLOG, "New posts monthly"),
     "/services/": (SERVICES, "Build &middot; Publish &middot; Support"),
     "/cloud/": (CLOUD, "Configure &middot; Deploy &middot; Maintain"),
     "/support/": (SUPPORT, "Watch &middot; Fix &middot; Verify"),

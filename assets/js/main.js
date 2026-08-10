@@ -14,7 +14,7 @@ const heroMessages = [
   "We monitor software solutions",
 ];
 const animatedElements = document.querySelectorAll(
-  ".proof-grid > div, .section-heading, .summary-card, .service-card, .course-card, .career-card, .cloud-checklist > article, .support-panel, .launch-stats > div, .contact-form, .cta-band"
+  ".proof-grid > div, .section-heading, .summary-card, .service-card, .course-card, .career-card, .cloud-checklist > article, .support-panel, .launch-stats > div, .contact-form, .cta-band, .blog-card"
 );
 const header = document.querySelector("[data-header]");
 const scrollProgress = document.querySelector("[data-scroll-progress]");

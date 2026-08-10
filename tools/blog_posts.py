@@ -8,7 +8,6 @@ POSTS = [
         "date": "2026-08-04",
         "date_label": "4 August 2026",
         "read": "6 min read",
-        "likes": 34,
         "image": "assets/images/hero/hero-websites.png",
         "image_alt": "Dark workspace showing website layouts, delivery boards, and development tools.",
         "excerpt": (
@@ -133,7 +132,6 @@ POSTS = [
         "date": "2026-07-28",
         "date_label": "28 July 2026",
         "read": "8 min read",
-        "likes": 57,
         "image": "assets/images/hero/hero-content.png",
         "image_alt": "Content planning workspace with editing timeline, publishing boards, and social analytics.",
         "excerpt": (
@@ -261,7 +259,6 @@ POSTS = [
         "date": "2026-07-21",
         "date_label": "21 July 2026",
         "read": "7 min read",
-        "likes": 41,
         "image": "assets/images/hero/hero-mobile-apps.png",
         "image_alt": "Mobile app development workspace showing phone interfaces and application code.",
         "excerpt": (

@@ -904,16 +904,6 @@ ARTICLE = """<!doctype html>
 
         <div class="container article-body">
 {body}
-
-          <div class="article-reactions">
-            <button class="like-button" type="button" data-like="{slug}" data-like-base="{likes}"
-              aria-pressed="false">
-              <span class="like-heart" aria-hidden="true">&#9829;</span>
-              <span class="like-count">{likes}</span>
-              <span class="sr-only">likes</span>
-            </button>
-            <p class="like-note">Found this useful? A like tells us what to write more of.</p>
-          </div>
         </div>
 
         <div class="container article-related">
@@ -991,7 +981,6 @@ for post in POSTS:
     others = [p for p in POSTS if p["slug"] != post["slug"]]
     html = ARTICLE.format(
         version=VERSION,
-        likes=post["likes"],
         related=blog_cards(others),
         nav=nav_for_blog,
         footer=FOOTER,

@@ -2310,60 +2310,6 @@ h3 {
   text-align: center;
 }
 
-/* likes */
-.article-reactions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 16px;
-  margin-top: 34px;
-  padding-top: 26px;
-  border-top: 1px solid var(--line);
-}
-
-.like-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 10px 18px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--paper);
-  color: var(--ink);
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 700;
-  transition: transform 220ms var(--e), border-color 200ms ease, background 200ms ease;
-}
-
-.like-button:hover {
-  border-color: var(--yellow);
-  background: #fffbe8;
-  transform: translateY(-2px);
-}
-
-.like-heart {
-  color: var(--line);
-  font-size: 16px;
-  transition: color 200ms ease, transform 260ms var(--e);
-}
-
-.like-button[aria-pressed="true"] {
-  border-color: var(--yellow);
-  background: rgba(246, 201, 14, 0.18);
-}
-
-.like-button[aria-pressed="true"] .like-heart {
-  color: #d63a5e;
-  transform: scale(1.18);
-}
-
-.like-note {
-  margin: 0;
-  color: var(--muted);
-  font-size: 13px;
-}
-
 /* related posts */
 .article-related {
   padding-bottom: 64px;

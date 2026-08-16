@@ -20,7 +20,7 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap"
       rel="stylesheet"
     >
-    <link rel="stylesheet" href="assets/css/styles.css?v=multipage-1">
+    <link rel="stylesheet" href="assets/css/styles.css?v=multipage-2">
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -128,7 +128,58 @@
             </p>
 
             <figure class="article-figure">
-              <img src="assets/images/blog/cloud-service-models.svg" alt="Chart comparing IaaS, PaaS and SaaS by which layers you manage." loading="lazy" width="1200" height="620">
+              <svg class="article-diagram" aria-label="Chart comparing IaaS, PaaS and SaaS by which layers you manage." xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="Comparison of IaaS, PaaS and SaaS showing which layers you manage.">
+                <rect width="1200" height="620" fill="#fffdf6"/>
+                <g font-family="'Plus Jakarta Sans','Helvetica Neue',Helvetica,Arial,sans-serif">
+                  <text x="60" y="72" font-size="34" font-weight="800" fill="#111111">Who manages what</text>
+                  <text x="60" y="108" font-size="20" fill="#5d5644">Yellow is yours to run. Grey is handled for you.</text>
+              
+                  <g font-size="17" font-weight="700" fill="#5d5644">
+                    <text x="60" y="176">LAYER</text>
+                    <text x="392" y="176" text-anchor="middle">IaaS</text>
+                    <text x="672" y="176" text-anchor="middle">PaaS</text>
+                    <text x="952" y="176" text-anchor="middle">SaaS</text>
+                  </g>
+              
+                  <g font-size="18">
+                    <text x="60" y="232" fill="#111111">Application</text>
+                    <text x="60" y="292" fill="#111111">Runtime</text>
+                    <text x="60" y="352" fill="#111111">Operating system</text>
+                    <text x="60" y="412" fill="#111111">Virtual machines</text>
+                    <text x="60" y="472" fill="#111111">Servers and network</text>
+                    <text x="60" y="532" fill="#111111">Data centre</text>
+                  </g>
+              
+                  <g>
+                    <rect x="292" y="206" width="200" height="42" rx="8" fill="#f6c90e"/>
+                    <rect x="292" y="266" width="200" height="42" rx="8" fill="#f6c90e"/>
+                    <rect x="292" y="326" width="200" height="42" rx="8" fill="#f6c90e"/>
+                    <rect x="292" y="386" width="200" height="42" rx="8" fill="#f6c90e"/>
+                    <rect x="292" y="446" width="200" height="42" rx="8" fill="#e6e2d4"/>
+                    <rect x="292" y="506" width="200" height="42" rx="8" fill="#e6e2d4"/>
+              
+                    <rect x="572" y="206" width="200" height="42" rx="8" fill="#f6c90e"/>
+                    <rect x="572" y="266" width="200" height="42" rx="8" fill="#e6e2d4"/>
+                    <rect x="572" y="326" width="200" height="42" rx="8" fill="#e6e2d4"/>
+                    <rect x="572" y="386" width="200" height="42" rx="8" fill="#e6e2d4"/>
+                    <rect x="572" y="446" width="200" height="42" rx="8" fill="#e6e2d4"/>
+                    <rect x="572" y="506" width="200" height="42" rx="8" fill="#e6e2d4"/>
+              
+                    <rect x="852" y="206" width="200" height="42" rx="8" fill="#e6e2d4"/>
+                    <rect x="852" y="266" width="200" height="42" rx="8" fill="#e6e2d4"/>
+                    <rect x="852" y="326" width="200" height="42" rx="8" fill="#e6e2d4"/>
+                    <rect x="852" y="386" width="200" height="42" rx="8" fill="#e6e2d4"/>
+                    <rect x="852" y="446" width="200" height="42" rx="8" fill="#e6e2d4"/>
+                    <rect x="852" y="506" width="200" height="42" rx="8" fill="#e6e2d4"/>
+                  </g>
+              
+                  <g font-size="15" font-weight="700" fill="#5f4900">
+                    <text x="392" y="580" text-anchor="middle">Most control</text>
+                    <text x="672" y="580" text-anchor="middle">Middle ground</text>
+                    <text x="952" y="580" text-anchor="middle">Least upkeep</text>
+                  </g>
+                </g>
+              </svg>
               <figcaption>The less of the stack you manage, the fewer things there are to keep patched.</figcaption>
             </figure>
 
@@ -173,7 +224,53 @@
             </ul>
 
             <figure class="article-figure">
-              <img src="assets/images/blog/cloud-launch-checks.svg" alt="Checklist of DNS, SSL, redirects, environment variables and backups." loading="lazy" width="1200" height="560">
+              <svg class="article-diagram" aria-label="Checklist of DNS, SSL, redirects, environment variables and backups." xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img" aria-label="Launch checklist covering DNS, SSL, redirects, environment variables and backups.">
+                <rect width="1200" height="560" fill="#fffdf6"/>
+                <g font-family="'Plus Jakarta Sans','Helvetica Neue',Helvetica,Arial,sans-serif">
+                  <text x="60" y="76" font-size="34" font-weight="800" fill="#111111">The five that cause most outages</text>
+                  <text x="60" y="112" font-size="20" fill="#5d5644">Configuration, not code.</text>
+              
+                  <g>
+                    <rect x="60" y="150" width="1080" height="66" rx="12" fill="#ffffff" stroke="#ded5bd"/>
+                    <circle cx="104" cy="183" r="16" fill="#f6c90e"/>
+                    <path d="M96 183 l6 7 l13 -14" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <text x="142" y="190" font-size="20" font-weight="700" fill="#111111">DNS points at the live server</text>
+                    <text x="1120" y="190" font-size="15" font-weight="700" fill="#5d5644" text-anchor="end">after every migration</text>
+                  </g>
+              
+                  <g>
+                    <rect x="60" y="230" width="1080" height="66" rx="12" fill="#ffffff" stroke="#ded5bd"/>
+                    <circle cx="104" cy="263" r="16" fill="#f6c90e"/>
+                    <path d="M96 263 l6 7 l13 -14" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <text x="142" y="270" font-size="20" font-weight="700" fill="#111111">SSL renews automatically</text>
+                    <text x="1120" y="270" font-size="15" font-weight="700" fill="#5d5644" text-anchor="end">check the expiry date</text>
+                  </g>
+              
+                  <g>
+                    <rect x="60" y="310" width="1080" height="66" rx="12" fill="#ffffff" stroke="#ded5bd"/>
+                    <circle cx="104" cy="343" r="16" fill="#f6c90e"/>
+                    <path d="M96 343 l6 7 l13 -14" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <text x="142" y="350" font-size="20" font-weight="700" fill="#111111">One canonical domain, no loops</text>
+                    <text x="1120" y="350" font-size="15" font-weight="700" fill="#5d5644" text-anchor="end">www or bare, pick one</text>
+                  </g>
+              
+                  <g>
+                    <rect x="60" y="390" width="1080" height="66" rx="12" fill="#ffffff" stroke="#ded5bd"/>
+                    <circle cx="104" cy="423" r="16" fill="#f6c90e"/>
+                    <path d="M96 423 l6 7 l13 -14" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <text x="142" y="430" font-size="20" font-weight="700" fill="#111111">Production environment variables set</text>
+                    <text x="1120" y="430" font-size="15" font-weight="700" fill="#5d5644" text-anchor="end">not just locally</text>
+                  </g>
+              
+                  <g>
+                    <rect x="60" y="470" width="1080" height="66" rx="12" fill="#ffffff" stroke="#ded5bd"/>
+                    <circle cx="104" cy="503" r="16" fill="#f6c90e"/>
+                    <path d="M96 503 l6 7 l13 -14" fill="none" stroke="#111111" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <text x="142" y="510" font-size="20" font-weight="700" fill="#111111">Backups and billing alerts on</text>
+                    <text x="1120" y="510" font-size="15" font-weight="700" fill="#5d5644" text-anchor="end">before launch day</text>
+                  </g>
+                </g>
+              </svg>
               <figcaption>Five configuration checks that prevent most small-site outages.</figcaption>
             </figure>
 
@@ -193,7 +290,39 @@
             </p>
 
             <figure class="article-figure">
-              <img src="assets/images/blog/cloud-costs.svg" alt="Chart of egress, idle resources and over-provisioning as sources of cloud cost." loading="lazy" width="1200" height="520">
+              <svg class="article-diagram" aria-label="Chart of egress, idle resources and over-provisioning as sources of cloud cost." xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="1200" height="520" role="img" aria-label="The three recurring sources of surprise cloud costs: egress, idle resources and over-provisioning.">
+                <rect width="1200" height="520" fill="#fffdf6"/>
+                <g font-family="'Plus Jakarta Sans','Helvetica Neue',Helvetica,Arial,sans-serif">
+                  <text x="60" y="72" font-size="34" font-weight="800" fill="#111111">Where the bill actually comes from</text>
+                  <text x="60" y="108" font-size="20" fill="#5d5644">Metered, not fixed. These three cause most surprises.</text>
+              
+                  <g>
+                    <rect x="60" y="170" width="1080" height="86" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+                    <rect x="60" y="170" width="470" height="86" rx="14" fill="#f6c90e"/>
+                    <text x="96" y="212" font-size="22" font-weight="800" fill="#111111">Egress</text>
+                    <text x="96" y="240" font-size="16" fill="#3a2f0d">data leaving the provider</text>
+                    <text x="1104" y="222" font-size="16" font-weight="700" fill="#5d5644" text-anchor="end">in is free, out is not</text>
+                  </g>
+              
+                  <g>
+                    <rect x="60" y="276" width="1080" height="86" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+                    <rect x="60" y="276" width="720" height="86" rx="14" fill="#ffb000"/>
+                    <text x="96" y="318" font-size="22" font-weight="800" fill="#111111">Idle resources</text>
+                    <text x="96" y="346" font-size="16" fill="#3a2f0d">the test machine from March</text>
+                    <text x="1104" y="328" font-size="16" font-weight="700" fill="#5d5644" text-anchor="end">still billing in August</text>
+                  </g>
+              
+                  <g>
+                    <rect x="60" y="382" width="1080" height="86" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+                    <rect x="60" y="382" width="330" height="86" rx="14" fill="#ffe066"/>
+                    <text x="96" y="424" font-size="22" font-weight="800" fill="#111111">Over-provisioning</text>
+                    <text x="96" y="452" font-size="16" fill="#3a2f0d">capacity for a spike that has not come</text>
+                    <text x="1104" y="434" font-size="16" font-weight="700" fill="#5d5644" text-anchor="end">size it later</text>
+                  </g>
+              
+                  <text x="60" y="502" font-size="17" font-weight="700" fill="#5f4900">Set a billing alert on day one. Two minutes, and it catches all three.</text>
+                </g>
+              </svg>
               <figcaption>Alerts on billing and uptime are the two to configure before launch day.</figcaption>
             </figure>
 
@@ -242,6 +371,22 @@
             <h2>More from the blog</h2>
           </div>
           <div class="blog-grid">
+          <article class="blog-card">
+            <a class="blog-card-media" href="/blog/deploy-a-static-site-on-s3/" tabindex="-1" aria-hidden="true">
+              <img src="assets/images/hero/hero-cloud.png" alt="" loading="lazy">
+            </a>
+            <div class="blog-card-body">
+              <div class="blog-meta">
+                <span class="blog-chip">Cloud</span>
+                <span>16 August 2026</span>
+                <span>11 min read</span>
+              </div>
+              <h3><a href="/blog/deploy-a-static-site-on-s3/">Deploy a static site on Amazon S3</a></h3>
+              <p>Bucket, policy, certificate, DNS, cache headers and a repeatable deploy command &mdash; the full configuration for putting a static site on S3 behind CloudFront.</p>
+              <span class="summary-more">Read article</span>
+            </div>
+          </article>
+
           <article class="blog-card">
             <a class="blog-card-media" href="/blog/what-is-paritylk/" tabindex="-1" aria-hidden="true">
               <img src="assets/images/hero/hero-websites.png" alt="" loading="lazy">
@@ -363,6 +508,6 @@
       </div>
     </footer>
 
-    <script src="assets/js/main.js?v=multipage-1"></script>
+    <script src="assets/js/main.js?v=multipage-2"></script>
   </body>
 </html>

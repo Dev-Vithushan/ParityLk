@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 730" width="1200" height="730" role="img" aria-label="Architecture diagram: visitors reach Route 53, then CloudFront with an ACM certificate, which reads a private S3 bucket in one region through Origin Access Control; a deploy pipeline uploads the build output to the bucket.">
+  <rect width="1200" height="730" fill="#fffdf6"/>
+  <g font-family="'Plus Jakarta Sans','Helvetica Neue',Helvetica,Arial,sans-serif">
+    <text x="60" y="70" font-size="34" font-weight="800" fill="#111111">Static site architecture on AWS</text>
+    <text x="60" y="104" font-size="20" fill="#5d5644">One request path in, one deploy path down.</text>
+
+    <!-- AWS Cloud boundary -->
+    <rect x="230" y="150" width="910" height="510" rx="16" fill="none" stroke="#232f3e"
+      stroke-width="1.6" stroke-dasharray="7 7" opacity=".75"/>
+    <image href="assets/images/aws/aws-cloud.svg" xlink:href="assets/images/aws/aws-cloud.svg"
+      x="248" y="164" width="26" height="26" preserveAspectRatio="xMidYMid meet"/>
+    <text x="284" y="185" font-size="16" font-weight="800" fill="#232f3e">AWS Cloud</text>
+
+    <!-- Region boundary -->
+    <rect x="830" y="200" width="280" height="220" rx="14" fill="none" stroke="#00a4a6"
+      stroke-width="1.6" stroke-dasharray="7 7"/>
+    <image href="assets/images/aws/region.svg" xlink:href="assets/images/aws/region.svg"
+      x="846" y="212" width="22" height="22" preserveAspectRatio="xMidYMid meet"/>
+    <text x="876" y="230" font-size="15" font-weight="700" fill="#00777a">Region &#183; ap-south-1</text>
+
+    <!-- request path -->
+    <g stroke="#c8bd9e" stroke-width="2" fill="none" stroke-linecap="round">
+      <path d="M170 315 H262"/>
+      <path d="M460 315 H532"/>
+      <path d="M730 315 H852"/>
+    </g>
+    <g fill="#f6c90e">
+      <path d="M270 315 l-14 -7 v14 z"/>
+      <path d="M540 315 l-14 -7 v14 z"/>
+      <path d="M860 315 l-14 -7 v14 z"/>
+    </g>
+    <text x="795" y="300" font-size="14" font-weight="700" fill="#5d5644" text-anchor="middle">OAC</text>
+
+    <!-- visitors -->
+    <g>
+      <image href="assets/images/aws/users.svg" xlink:href="assets/images/aws/users.svg"
+        x="72" y="256" width="56" height="56" preserveAspectRatio="xMidYMid meet"/>
+      <text x="100" y="344" font-size="19" font-weight="700" fill="#111111" text-anchor="middle">Visitors</text>
+      <text x="100" y="368" font-size="15" fill="#5d5644" text-anchor="middle">https://example.com</text>
+    </g>
+
+    <!-- Route 53 -->
+    <g>
+      <rect x="270" y="250" width="190" height="130" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+      <image href="assets/images/aws/route53.png" xlink:href="assets/images/aws/route53.png"
+        x="294" y="270" width="44" height="44" preserveAspectRatio="xMidYMid meet"/>
+      <text x="294" y="342" font-size="19" font-weight="700" fill="#111111">Route 53</text>
+      <text x="294" y="366" font-size="15" fill="#5d5644">alias A record</text>
+    </g>
+
+    <!-- CloudFront -->
+    <g>
+      <rect x="540" y="250" width="190" height="130" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+      <image href="assets/images/aws/cloudfront.png" xlink:href="assets/images/aws/cloudfront.png"
+        x="564" y="270" width="44" height="44" preserveAspectRatio="xMidYMid meet"/>
+      <text x="564" y="342" font-size="19" font-weight="700" fill="#111111">CloudFront</text>
+      <text x="564" y="366" font-size="15" fill="#5d5644">edge cache, TLS</text>
+    </g>
+
+    <!-- S3 inside the region -->
+    <g>
+      <rect x="860" y="250" width="220" height="130" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+      <image href="assets/images/aws/s3.png" xlink:href="assets/images/aws/s3.png"
+        x="884" y="270" width="44" height="44" preserveAspectRatio="xMidYMid meet"/>
+      <text x="884" y="342" font-size="19" font-weight="700" fill="#111111">Amazon S3</text>
+      <text x="884" y="366" font-size="15" fill="#5d5644">private bucket</text>
+    </g>
+
+    <!-- certificate attached to the distribution -->
+    <path d="M635 470 V392" stroke="#c8bd9e" stroke-width="2" fill="none" stroke-dasharray="6 6"/>
+    <path d="M635 380 l-7 14 h14 z" fill="#f6c90e"/>
+    <text x="652" y="432" font-size="14" font-weight="700" fill="#5d5644">certificate</text>
+    <g>
+      <rect x="540" y="470" width="190" height="130" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+      <image href="assets/images/aws/certificate-manager.png" xlink:href="assets/images/aws/certificate-manager.png"
+        x="564" y="490" width="44" height="44" preserveAspectRatio="xMidYMid meet"/>
+      <text x="564" y="562" font-size="19" font-weight="700" fill="#111111">ACM</text>
+      <text x="564" y="586" font-size="15" fill="#5d5644">issued in us-east-1</text>
+    </g>
+
+    <!-- deploy path: the build runs outside AWS entirely -->
+    <text x="30" y="438" font-size="14" font-weight="700" fill="#8b8368" letter-spacing="1">OUTSIDE AWS</text>
+    <g>
+      <rect x="30" y="450" width="190" height="170" rx="14" fill="#111111"/>
+      <g transform="translate(54 470)">
+        <rect x="0" y="0" width="40" height="40" rx="7" fill="#1f1f1f" stroke="#f6c90e" stroke-width="1.4"/>
+        <path d="M10 14 H30 M10 21 H25 M10 28 H19" stroke="#f6c90e" stroke-width="2.4" stroke-linecap="round"/>
+      </g>
+      <text x="54" y="540" font-size="19" font-weight="700" fill="#fffdf6">Build output</text>
+      <text x="54" y="564" font-size="14" fill="#c8bd9e">dist/ from the build</text>
+      <text x="54" y="594" font-size="14" font-weight="700" fill="#f6c90e">your laptop or CI</text>
+    </g>
+    <path d="M220 535 H300 V630 H970 V404" stroke="#c8bd9e" stroke-width="2" fill="none"
+      stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 6"/>
+    <path d="M970 390 l-7 14 h14 z" fill="#f6c90e"/>
+    <rect x="524" y="612" width="152" height="24" rx="6" fill="#fffdf6"/>
+    <text x="600" y="629" font-size="15" font-weight="700" fill="#5d5644" text-anchor="middle"
+      font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">aws s3 sync</text>
+
+    <text x="60" y="706" font-size="15" fill="#5d5644">Nothing reaches the bucket directly: CloudFront is the only reader, and the deploy is the only writer.</text>
+  </g>
+</svg>

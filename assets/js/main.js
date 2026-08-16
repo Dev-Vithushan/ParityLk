@@ -267,3 +267,53 @@ if (glowCards.length && window.matchMedia("(hover: hover)").matches) {
     });
   });
 }
+
+
+/* Tiny syntax colouring for article code blocks. Shell and JSON only, which is
+   all the posts use, so no highlighter library has to ship with the site. */
+const codeBlocks = document.querySelectorAll(".article-body pre code[class*='language-']");
+
+if (codeBlocks.length) {
+  const escapeHtml = (value) =>
+    value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+  const wrap = (token, text) => `<span class="tok-${token}">${text}</span>`;
+
+  // one pass per block: a token already matched can never be re-tokenised
+  const SHELL = /(#[^\n]*)|("(?:[^"\\]|\\.)*")|((?:^|\n)\s*)([a-z][\w.-]*)|(\s)(--?[A-Za-z][\w-]*)/g;
+  const JSON_TOKENS = /("(?:[^"\\]|\\.)*")(\s*:)?|\b(true|false|null)\b|\b(\d+)\b/g;
+  const YAML = /(#[^\n]*)|("(?:[^"\\]|\\.)*")|((?:^|\n)\s*-?\s*)([\w.-]+)(:)/g;
+
+  const highlighters = {
+    shell: (html) =>
+      html.replace(SHELL, (match, comment, string, lead, command, space, flag) => {
+        if (comment) return wrap("comment", comment);
+        if (string) return wrap("string", string);
+        if (command) return `${lead}${wrap("command", command)}`;
+        return `${space}${wrap("flag", flag)}`;
+      }),
+    json: (html) =>
+      html.replace(JSON_TOKENS, (match, string, colon, literal, number) => {
+        if (string) return colon ? `${wrap("key", string)}${colon}` : wrap("string", string);
+        if (literal) return wrap("literal", literal);
+        return wrap("number", number);
+      }),
+    yaml: (html) =>
+      html.replace(YAML, (match, comment, string, lead, key, colon) => {
+        if (comment) return wrap("comment", comment);
+        if (string) return wrap("string", string);
+        return `${lead}${wrap("key", key)}${colon}`;
+      }),
+  };
+
+  codeBlocks.forEach((block) => {
+    const language = (block.className.match(/language-(\w+)/) || [])[1];
+    const highlighter = highlighters[language];
+
+    if (!highlighter) {
+      return;
+    }
+
+    block.innerHTML = highlighter(escapeHtml(block.textContent));
+  });
+}

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img" aria-label="Side by side comparison of what a website is good at versus what a mobile app is good at.">
   <rect width="1200" height="560" fill="#fffdf6"/>
-  <g font-family="'Plus Jakarta Sans',sans-serif">
+  <g font-family="'Plus Jakarta Sans','Helvetica Neue',Helvetica,Arial,sans-serif">
     <rect x="60" y="60" width="520" height="440" rx="18" fill="#ffffff" stroke="#ded5bd"/>
     <rect x="620" y="60" width="520" height="440" rx="18" fill="#111111"/>
 

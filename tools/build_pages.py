@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate ParityLk inner pages from a shared shell."""
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -9,7 +10,7 @@ from blog_posts import POSTS
 
 # repo root, so the generator runs the same locally and in CI
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "multipage-1"
+VERSION = "multipage-2"
 
 NAV = [
     ("/", "Home"),
@@ -937,6 +938,30 @@ ARTICLE = """<!doctype html>
 """
 
 
+def inline_diagrams(body):
+    """Swap <img src="...blog/*.svg"> for the file's own markup.
+
+    An SVG loaded through <img> cannot see the page's webfont, so the diagram
+    labels fall back to a system face. Inlining keeps them in Plus Jakarta Sans.
+    """
+
+    def replace(match):
+        path = match.group("src")
+        alt = match.group("alt")
+        with open(os.path.join(ROOT, path)) as handle:
+            svg = handle.read().strip()
+
+        svg = re.sub(r'^<\?xml[^>]*\?>\s*', "", svg)
+        svg = svg.replace("<svg ", f'<svg class="article-diagram" aria-label="{alt}" ', 1)
+        return "\n              ".join(svg.splitlines())
+
+    return re.sub(
+        r'<img src="(?P<src>assets/images/blog/[^"]+\.svg)" alt="(?P<alt>[^"]*)"[^>]*>',
+        replace,
+        body,
+    )
+
+
 def action_markup(actions):
     rows = []
     for cls, href, label in actions:
@@ -992,7 +1017,7 @@ for post in POSTS:
         image_alt=post["image_alt"],
         excerpt=post["excerpt"],
         excerpt_plain=post["excerpt"].replace("&mdash;", "-").replace("&nbsp;", " "),
-        body=post["body"].rstrip("\n"),
+        body=inline_diagrams(post["body"].rstrip("\n")),
     )
     out_dir = os.path.join(ROOT, "blog", post["slug"])
     os.makedirs(out_dir, exist_ok=True)

@@ -2274,6 +2274,66 @@ h3 {
   font-weight: 700;
 }
 
+.article-body code {
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fffdf6;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.86em;
+  color: #2f2b22;
+}
+
+/* command and config blocks: scroll sideways rather than widen the column */
+.article-body pre {
+  overflow-x: auto;
+  margin: 0 0 24px;
+  padding: 18px 20px;
+  border: 1px solid #2b2b2b;
+  border-radius: 14px;
+  background: #111111;
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+.article-body pre code {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: #efe8d5;
+  font-size: inherit;
+  white-space: pre;
+}
+
+/* token colours applied by the highlighter in main.js */
+.article-body pre .tok-comment {
+  color: #8b8368;
+  font-style: italic;
+}
+
+.article-body pre .tok-command {
+  color: #f6c90e;
+  font-weight: 700;
+}
+
+.article-body pre .tok-flag {
+  color: #8fd0ff;
+}
+
+.article-body pre .tok-string {
+  color: #a5e0a0;
+}
+
+.article-body pre .tok-key {
+  color: #ffd166;
+}
+
+.article-body pre .tok-number,
+.article-body pre .tok-literal {
+  color: #ff9e6d;
+}
+
 .article .cta-band {
   margin-bottom: 76px;
 }
@@ -2302,11 +2362,13 @@ h3 {
   border-radius: 14px;
 }
 
-/* diagrams must show whole, not be cropped like a photo */
-.article-figure img[src$=".svg"] {
+/* diagrams are inlined at build time so their labels use the site typeface */
+.article-figure .article-diagram {
+  display: block;
+  width: 100%;
   height: auto;
-  max-height: none;
-  object-fit: contain;
+  border: 1px solid var(--line);
+  border-radius: 14px;
   background: #fffdf6;
 }
 

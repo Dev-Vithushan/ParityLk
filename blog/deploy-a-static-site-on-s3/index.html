@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/">
+    <title>Deploy a static site on Amazon S3 | Parity Lk</title>
+    <meta name="description" content="Bucket, policy, certificate, DNS, cache headers and a repeatable deploy command - the full configuration for putting a static site on S3 behind CloudFront.">
+    <link rel="canonical" href="https://paritylk.com/blog/deploy-a-static-site-on-s3/">
+    <meta name="theme-color" content="#111111">
+    <meta property="og:title" content="Deploy a static site on Amazon S3">
+    <meta property="og:description" content="Bucket, policy, certificate, DNS, cache headers and a repeatable deploy command - the full configuration for putting a static site on S3 behind CloudFront.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="assets/images/hero/hero-cloud.png">
+    <meta property="article:published_time" content="2026-08-16">
+    <link rel="icon" href="assets/images/paritylk-favicon.png?v=4" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="assets/css/styles.css?v=multipage-2">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <div class="container header-inner">
+        <a class="brand" href="/" aria-label="ParityLk home">
+          <img
+            class="brand-logo"
+            src="assets/images/paritylk-navbar-logo.png"
+            width="128"
+            height="54"
+            alt=""
+            aria-hidden="true"
+          >
+        </a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span class="nav-toggle-line"></span>
+          <span class="nav-toggle-line"></span>
+          <span class="sr-only">Toggle navigation</span>
+        </button>
+
+        <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+          <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/services/">Services</a>
+            <a href="/cloud/">Cloud</a>
+            <a href="/support/">Support</a>
+            <a href="/courses/">Courses</a>
+            <a href="/careers/">Careers</a>
+            <a href="/blog/" aria-current="page">Blogs</a>
+          </div>
+          <a class="nav-cta" href="/contact/">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <article class="article" data-article>
+        <div class="reading-progress" data-reading-progress aria-hidden="true">
+          <span class="reading-ring"></span>
+          <span class="reading-value" data-reading-value>0%</span>
+        </div>
+
+        <section class="page-hero article-head" aria-labelledby="page-title">
+          <div class="container article-head-inner">
+            <a class="article-back" href="/blog/">All articles</a>
+
+            <figure class="article-hero-media">
+              <img src="assets/images/hero/hero-cloud.png" alt="Cloud deployment workspace showing storage buckets, distribution nodes, and configuration panels." width="1672" height="941">
+              <figcaption class="article-hero-overlay">
+                <h1 id="page-title">Deploy a static site on Amazon S3</h1>
+                <p class="article-lede">Bucket, policy, certificate, DNS, cache headers and a repeatable deploy command &mdash; the full configuration for putting a static site on S3 behind CloudFront.</p>
+              </figcaption>
+            </figure>
+
+            <div class="article-topbar">
+              <span class="blog-chip">Cloud</span>
+              <span class="article-meta">16 August 2026</span>
+              <span class="article-meta">11 min read</span>
+            </div>
+          </div>
+        </section>
+
+        <div class="container article-body">
+
+            <h2>What this actually gets you</h2>
+            <p>
+              A static site &mdash; HTML, CSS, JavaScript, images, no server-side code &mdash; needs
+              somewhere to keep files and something to hand them to visitors over HTTPS. On AWS
+              that is an S3 bucket for the files and a CloudFront distribution in front of it for
+              TLS, custom domains, and an edge cache.
+            </p>
+            <p>
+              There are no servers to patch and nothing that can crash at 2am. For a typical
+              brochure site the bill lands in the region of a dollar a month, most of it CloudFront
+              traffic rather than storage.
+            </p>
+            <div class="cloud-providers article-logos" aria-label="Amazon Web Services">
+              <span class="cloud-provider">
+                <img src="assets/images/cloud/aws.svg" width="512" height="307" alt="Amazon Web Services logo" loading="lazy">
+              </span>
+            </div>
+            <p>
+              The whole stack is four services, and you touch each of them once:
+            </p>
+
+            <figure class="article-figure">
+              <svg class="article-diagram" aria-label="The four AWS services used: Amazon S3, CloudFront, Certificate Manager and Route 53." xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 460" width="1200" height="460" role="img" aria-label="The four AWS services used to host a static site: S3, CloudFront, Certificate Manager and Route 53.">
+                <rect width="1200" height="460" fill="#fffdf6"/>
+                <g font-family="'Plus Jakarta Sans','Helvetica Neue',Helvetica,Arial,sans-serif">
+                  <text x="60" y="76" font-size="34" font-weight="800" fill="#111111">Four services, nothing else</text>
+                  <text x="60" y="112" font-size="20" fill="#5d5644">Storage, delivery, certificate, name.</text>
+              
+                  <!-- S3 -->
+                  <g>
+                    <rect x="60" y="160" width="252" height="238" rx="18" fill="#ffffff" stroke="#ded5bd"/>
+                    <image href="assets/images/aws/s3.png" xlink:href="assets/images/aws/s3.png"
+                      x="130" y="192" width="112" height="112" preserveAspectRatio="xMidYMid meet"/>
+                    <text x="186" y="348" font-size="21" font-weight="800" fill="#111111" text-anchor="middle">Amazon S3</text>
+                    <text x="186" y="376" font-size="15" fill="#5d5644" text-anchor="middle">the files</text>
+                  </g>
+              
+                  <!-- CloudFront -->
+                  <g>
+                    <rect x="336" y="160" width="252" height="238" rx="18" fill="#ffffff" stroke="#ded5bd"/>
+                    <image href="assets/images/aws/cloudfront.png" xlink:href="assets/images/aws/cloudfront.png"
+                      x="406" y="192" width="112" height="112" preserveAspectRatio="xMidYMid meet"/>
+                    <text x="462" y="348" font-size="21" font-weight="800" fill="#111111" text-anchor="middle">CloudFront</text>
+                    <text x="462" y="376" font-size="15" fill="#5d5644" text-anchor="middle">HTTPS and cache</text>
+                  </g>
+              
+                  <!-- ACM -->
+                  <g>
+                    <rect x="612" y="160" width="252" height="238" rx="18" fill="#ffffff" stroke="#ded5bd"/>
+                    <image href="assets/images/aws/certificate-manager.png" xlink:href="assets/images/aws/certificate-manager.png"
+                      x="682" y="192" width="112" height="112" preserveAspectRatio="xMidYMid meet"/>
+                    <text x="738" y="348" font-size="21" font-weight="800" fill="#111111" text-anchor="middle">Certificate Manager</text>
+                    <text x="738" y="376" font-size="15" fill="#5d5644" text-anchor="middle">us-east-1 only</text>
+                  </g>
+              
+                  <!-- Route 53 -->
+                  <g>
+                    <rect x="888" y="160" width="252" height="238" rx="18" fill="#ffffff" stroke="#ded5bd"/>
+                    <image href="assets/images/aws/route53.png" xlink:href="assets/images/aws/route53.png"
+                      x="958" y="192" width="112" height="112" preserveAspectRatio="xMidYMid meet"/>
+                    <text x="1014" y="348" font-size="21" font-weight="800" fill="#111111" text-anchor="middle">Route 53</text>
+                    <text x="1014" y="376" font-size="15" fill="#5d5644" text-anchor="middle">alias record</text>
+                  </g>
+                </g>
+              </svg>
+              <figcaption>S3 holds the files, CloudFront serves them, ACM issues the certificate, Route 53 carries the name.</figcaption>
+            </figure>
+
+            <figure class="article-figure">
+              <svg class="article-diagram" aria-label="Architecture diagram: visitors resolve through Route 53 to CloudFront, which holds the ACM certificate and reads a private S3 bucket in one region through Origin Access Control, while the build output is uploaded straight to the bucket." xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 730" width="1200" height="730" role="img" aria-label="Architecture diagram: visitors reach Route 53, then CloudFront with an ACM certificate, which reads a private S3 bucket in one region through Origin Access Control; a deploy pipeline uploads the build output to the bucket.">
+                <rect width="1200" height="730" fill="#fffdf6"/>
+                <g font-family="'Plus Jakarta Sans','Helvetica Neue',Helvetica,Arial,sans-serif">
+                  <text x="60" y="70" font-size="34" font-weight="800" fill="#111111">Static site architecture on AWS</text>
+                  <text x="60" y="104" font-size="20" fill="#5d5644">One request path in, one deploy path down.</text>
+              
+                  <!-- AWS Cloud boundary -->
+                  <rect x="230" y="150" width="910" height="510" rx="16" fill="none" stroke="#232f3e"
+                    stroke-width="1.6" stroke-dasharray="7 7" opacity=".75"/>
+                  <image href="assets/images/aws/aws-cloud.svg" xlink:href="assets/images/aws/aws-cloud.svg"
+                    x="248" y="164" width="26" height="26" preserveAspectRatio="xMidYMid meet"/>
+                  <text x="284" y="185" font-size="16" font-weight="800" fill="#232f3e">AWS Cloud</text>
+              
+                  <!-- Region boundary -->
+                  <rect x="830" y="200" width="280" height="220" rx="14" fill="none" stroke="#00a4a6"
+                    stroke-width="1.6" stroke-dasharray="7 7"/>
+                  <image href="assets/images/aws/region.svg" xlink:href="assets/images/aws/region.svg"
+                    x="846" y="212" width="22" height="22" preserveAspectRatio="xMidYMid meet"/>
+                  <text x="876" y="230" font-size="15" font-weight="700" fill="#00777a">Region &#183; ap-south-1</text>
+              
+                  <!-- request path -->
+                  <g stroke="#c8bd9e" stroke-width="2" fill="none" stroke-linecap="round">
+                    <path d="M170 315 H262"/>
+                    <path d="M460 315 H532"/>
+                    <path d="M730 315 H852"/>
+                  </g>
+                  <g fill="#f6c90e">
+                    <path d="M270 315 l-14 -7 v14 z"/>
+                    <path d="M540 315 l-14 -7 v14 z"/>
+                    <path d="M860 315 l-14 -7 v14 z"/>
+                  </g>
+                  <text x="795" y="300" font-size="14" font-weight="700" fill="#5d5644" text-anchor="middle">OAC</text>
+              
+                  <!-- visitors -->
+                  <g>
+                    <image href="assets/images/aws/users.svg" xlink:href="assets/images/aws/users.svg"
+                      x="72" y="256" width="56" height="56" preserveAspectRatio="xMidYMid meet"/>
+                    <text x="100" y="344" font-size="19" font-weight="700" fill="#111111" text-anchor="middle">Visitors</text>
+                    <text x="100" y="368" font-size="15" fill="#5d5644" text-anchor="middle">https://example.com</text>
+                  </g>
+              
+                  <!-- Route 53 -->
+                  <g>
+                    <rect x="270" y="250" width="190" height="130" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+                    <image href="assets/images/aws/route53.png" xlink:href="assets/images/aws/route53.png"
+                      x="294" y="270" width="44" height="44" preserveAspectRatio="xMidYMid meet"/>
+                    <text x="294" y="342" font-size="19" font-weight="700" fill="#111111">Route 53</text>
+                    <text x="294" y="366" font-size="15" fill="#5d5644">alias A record</text>
+                  </g>
+              
+                  <!-- CloudFront -->
+                  <g>
+                    <rect x="540" y="250" width="190" height="130" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+                    <image href="assets/images/aws/cloudfront.png" xlink:href="assets/images/aws/cloudfront.png"
+                      x="564" y="270" width="44" height="44" preserveAspectRatio="xMidYMid meet"/>
+                    <text x="564" y="342" font-size="19" font-weight="700" fill="#111111">CloudFront</text>
+                    <text x="564" y="366" font-size="15" fill="#5d5644">edge cache, TLS</text>
+                  </g>
+              
+                  <!-- S3 inside the region -->
+                  <g>
+                    <rect x="860" y="250" width="220" height="130" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+                    <image href="assets/images/aws/s3.png" xlink:href="assets/images/aws/s3.png"
+                      x="884" y="270" width="44" height="44" preserveAspectRatio="xMidYMid meet"/>
+                    <text x="884" y="342" font-size="19" font-weight="700" fill="#111111">Amazon S3</text>
+                    <text x="884" y="366" font-size="15" fill="#5d5644">private bucket</text>
+                  </g>
+              
+                  <!-- certificate attached to the distribution -->
+                  <path d="M635 470 V392" stroke="#c8bd9e" stroke-width="2" fill="none" stroke-dasharray="6 6"/>
+                  <path d="M635 380 l-7 14 h14 z" fill="#f6c90e"/>
+                  <text x="652" y="432" font-size="14" font-weight="700" fill="#5d5644">certificate</text>
+                  <g>
+                    <rect x="540" y="470" width="190" height="130" rx="14" fill="#ffffff" stroke="#ded5bd"/>
+                    <image href="assets/images/aws/certificate-manager.png" xlink:href="assets/images/aws/certificate-manager.png"
+                      x="564" y="490" width="44" height="44" preserveAspectRatio="xMidYMid meet"/>
+                    <text x="564" y="562" font-size="19" font-weight="700" fill="#111111">ACM</text>
+                    <text x="564" y="586" font-size="15" fill="#5d5644">issued in us-east-1</text>
+                  </g>
+              
+                  <!-- deploy path: the build runs outside AWS entirely -->
+                  <text x="30" y="438" font-size="14" font-weight="700" fill="#8b8368" letter-spacing="1">OUTSIDE AWS</text>
+                  <g>
+                    <rect x="30" y="450" width="190" height="170" rx="14" fill="#111111"/>
+                    <g transform="translate(54 470)">
+                      <rect x="0" y="0" width="40" height="40" rx="7" fill="#1f1f1f" stroke="#f6c90e" stroke-width="1.4"/>
+                      <path d="M10 14 H30 M10 21 H25 M10 28 H19" stroke="#f6c90e" stroke-width="2.4" stroke-linecap="round"/>
+                    </g>
+                    <text x="54" y="540" font-size="19" font-weight="700" fill="#fffdf6">Build output</text>
+                    <text x="54" y="564" font-size="14" fill="#c8bd9e">dist/ from the build</text>
+                    <text x="54" y="594" font-size="14" font-weight="700" fill="#f6c90e">your laptop or CI</text>
+                  </g>
+                  <path d="M220 535 H300 V630 H970 V404" stroke="#c8bd9e" stroke-width="2" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 6"/>
+                  <path d="M970 390 l-7 14 h14 z" fill="#f6c90e"/>
+                  <rect x="524" y="612" width="152" height="24" rx="6" fill="#fffdf6"/>
+                  <text x="600" y="629" font-size="15" font-weight="700" fill="#5d5644" text-anchor="middle"
+                    font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">aws s3 sync</text>
+              
+                  <text x="60" y="706" font-size="15" fill="#5d5644">Nothing reaches the bucket directly: CloudFront is the only reader, and the deploy is the only writer.</text>
+                </g>
+              </svg>
+              <figcaption>The request path runs left to right; the deploy path is the dashed line into the bucket.</figcaption>
+            </figure>
+
+            <h2>Website endpoint or CloudFront?</h2>
+            <p>
+              S3 has a built-in static website endpoint, and every tutorial starts there. It works,
+              but it serves plain HTTP and requires the bucket to be publicly readable, so it
+              cannot carry your domain with a padlock on it.
+            </p>
+            <p>
+              The setup worth learning is the second one: keep the bucket private and put
+              CloudFront in front with Origin Access Control. Same files, but with HTTPS, a free
+              certificate that renews itself, and a cache that puts your site near the visitor.
+            </p>
+
+            <figure class="article-figure">
+              <svg class="article-diagram" aria-label="Comparison of the S3 website endpoint against CloudFront with Origin Access Control." xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="1200" height="520" role="img" aria-label="Comparison of the S3 website endpoint and CloudFront with Origin Access Control.">
+                <rect width="1200" height="520" fill="#fffdf6"/>
+                <g font-family="'Plus Jakarta Sans','Helvetica Neue',Helvetica,Arial,sans-serif">
+                  <text x="60" y="76" font-size="34" font-weight="800" fill="#111111">Two ways to serve the bucket</text>
+                  <text x="60" y="112" font-size="20" fill="#5d5644">One is quick. One is the one you ship.</text>
+              
+                  <g>
+                    <rect x="60" y="152" width="520" height="316" rx="16" fill="#ffffff" stroke="#ded5bd"/>
+                    <text x="96" y="198" font-size="22" font-weight="800" fill="#111111">S3 website endpoint</text>
+                    <text x="96" y="226" font-size="15" font-weight="700" fill="#5d5644" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">http:// only</text>
+              
+                    <g font-size="17" fill="#2f2b22">
+                      <circle cx="106" cy="264" r="7" fill="#f6c90e"/>
+                      <text x="128" y="270">Bucket must be publicly readable</text>
+                      <circle cx="106" cy="304" r="7" fill="#f6c90e"/>
+                      <text x="128" y="310">No HTTPS on a custom domain</text>
+                      <circle cx="106" cy="344" r="7" fill="#f6c90e"/>
+                      <text x="128" y="350">No edge cache, no global speed</text>
+                      <circle cx="106" cy="384" r="7" fill="#f6c90e"/>
+                      <text x="128" y="390">Index and error documents built in</text>
+                    </g>
+                    <text x="96" y="436" font-size="15" font-weight="700" fill="#5d5644">Fine for a throwaway test.</text>
+                  </g>
+              
+                  <g>
+                    <rect x="620" y="152" width="520" height="316" rx="16" fill="#111111"/>
+                    <text x="656" y="198" font-size="22" font-weight="800" fill="#fffdf6">CloudFront + OAC</text>
+                    <text x="656" y="226" font-size="15" font-weight="700" fill="#f6c90e" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">https:// everywhere</text>
+              
+                    <g font-size="17" fill="#efe8d5">
+                      <path d="M660 258 l6 8 l14 -16" fill="none" stroke="#f6c90e" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="694" y="270">Bucket stays fully private</text>
+                      <path d="M660 298 l6 8 l14 -16" fill="none" stroke="#f6c90e" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="694" y="310">Free ACM certificate, auto renewed</text>
+                      <path d="M660 338 l6 8 l14 -16" fill="none" stroke="#f6c90e" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="694" y="350">Cached near the visitor</text>
+                      <path d="M660 378 l6 8 l14 -16" fill="none" stroke="#f6c90e" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <text x="694" y="390">Custom error pages and redirects</text>
+                    </g>
+                    <text x="656" y="436" font-size="15" font-weight="700" fill="#c8bd9e">The default for anything with a domain.</text>
+                  </g>
+                </g>
+              </svg>
+              <figcaption>The website endpoint is a test tool. CloudFront is what you launch on.</figcaption>
+            </figure>
+
+            <h2>Create the bucket</h2>
+            <p>
+              The bucket name only has to be unique within AWS &mdash; it never appears in a URL once
+              CloudFront is in front, so it does not need to match your domain. Pick a region close
+              to you or to whoever updates the site; the cache handles distance for everyone else.
+            </p>
+            <pre><code class="language-shell">aws s3api create-bucket \
+  --bucket example-site-prod \
+  --region ap-south-1 \
+  --create-bucket-configuration LocationConstraint=ap-south-1
+
+# keep every public-access door shut
+aws s3api put-public-access-block \
+  --bucket example-site-prod \
+  --public-access-block-configuration \
+    "BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
+
+# versioning: a bad deploy stays recoverable
+aws s3api put-bucket-versioning \
+  --bucket example-site-prod \
+  --versioning-configuration Status=Enabled</code></pre>
+            <p>
+              Leave <code>Block all public access</code> on. With CloudFront and OAC, nothing about
+              this setup requires the bucket to be public, and a public bucket is the single most
+              common way static hosting goes wrong.
+            </p>
+
+            <h2>Upload the build output</h2>
+            <p>
+              &ldquo;Build output&rdquo; is the folder your build command produces &mdash;
+              <code>dist/</code>, <code>build/</code>, <code>public/</code> or <code>_site/</code>,
+              depending on the tool. It is not in AWS and not in your repository: it is generated
+              on whichever machine runs <code>npm run build</code>, and it is normally in
+              <code>.gitignore</code>. What you commit is the source; what you upload is the output.
+            </p>
+            <p>
+              That machine is either your laptop or a CI runner such as GitHub Actions. The command
+              is the same in both places; only the credentials differ. Upload the contents of the
+              build directory, not the directory itself &mdash; everything is relative to the bucket
+              root, so an extra folder level is the reason a site loads with no styling.
+            </p>
+            <pre><code class="language-shell">aws s3 sync ./dist s3://example-site-prod --delete</code></pre>
+            <p>
+              The <code>--delete</code> flag removes files in the bucket that no longer exist in the
+              build. Without it, deleted pages stay live for months and old bundles quietly
+              accumulate storage cost.
+            </p>
+
+            <h2>Point CloudFront at the bucket</h2>
+            <p>
+              Create a distribution whose origin is the S3 <em>bucket</em> (the
+              <code>.s3.amazonaws.com</code> name), not the website endpoint, and attach an Origin
+              Access Control. The settings that matter:
+            </p>
+            <ul>
+              <li><strong>Origin access</strong> &mdash; Origin Access Control, signed with SigV4.</li>
+              <li><strong>Viewer protocol policy</strong> &mdash; redirect HTTP to HTTPS.</li>
+              <li><strong>Default root object</strong> &mdash; <code>index.html</code>, so the bare domain resolves to something.</li>
+              <li><strong>Compression</strong> &mdash; on. It is a checkbox and it is free.</li>
+              <li><strong>Alternate domain name</strong> &mdash; your domain, plus the <code>www</code> variant if you use one.</li>
+            </ul>
+            <p>
+              CloudFront will offer to write the bucket policy for you. It ends up looking like
+              this &mdash; access granted to the CloudFront service principal, restricted to one
+              distribution:
+            </p>
+            <pre><code class="language-json">{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Sid": "AllowCloudFrontRead",
+    "Effect": "Allow",
+    "Principal": { "Service": "cloudfront.amazonaws.com" },
+    "Action": "s3:GetObject",
+    "Resource": "arn:aws:s3:::example-site-prod/*",
+    "Condition": {
+      "StringEquals": {
+        "AWS:SourceArn": "arn:aws:cloudfront::111122223333:distribution/E1A2B3C4D5E6F7"
+      }
+    }
+  }]
+}</code></pre>
+            <p>
+              Note what is missing: no <code>"Principal": "*"</code>, no public read. If your policy
+              has either, the bucket is open to the internet regardless of what CloudFront is doing.
+            </p>
+
+            <h2>Certificate and DNS</h2>
+            <p>
+              Request the certificate in AWS Certificate Manager in <strong>us-east-1</strong>.
+              This catches almost everyone once: CloudFront only reads certificates from that
+              region, no matter where the bucket lives. Validate by DNS so it renews without you.
+            </p>
+            <p>
+              Then point the domain at the distribution. In Route 53 that is an A record of type
+              <em>alias</em> targeting CloudFront &mdash; not a CNAME, which cannot sit on a bare
+              domain. On another DNS provider, use a CNAME for <code>www</code> and whatever
+              flattening or ALIAS feature they offer for the apex.
+            </p>
+            <p>
+              Pick one canonical hostname and redirect the other to it. Serving the site on both
+              <code>example.com</code> and <code>www.example.com</code> splits your SEO and doubles
+              the surprises.
+            </p>
+
+            <h2>Cache headers, and the deploy that ignores them</h2>
+            <p>
+              This is the part that decides whether visitors see your update. Hashed asset
+              filenames change on every build, so they can be cached forever. HTML entry files keep
+              the same name and point at those assets, so they must never be cached.
+            </p>
+
+            <figure class="article-figure">
+              <svg class="article-diagram" aria-label="Table of Cache-Control values for hashed bundles, images and HTML files." xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500" role="img" aria-label="Cache-Control values for hashed assets, images and HTML entry files.">
+                <rect width="1200" height="500" fill="#fffdf6"/>
+                <g font-family="'Plus Jakarta Sans','Helvetica Neue',Helvetica,Arial,sans-serif">
+                  <text x="60" y="76" font-size="34" font-weight="800" fill="#111111">Cache the assets, never the HTML</text>
+                  <text x="60" y="112" font-size="20" fill="#5d5644">The single header that decides whether a deploy is visible.</text>
+              
+                  <g font-size="14" font-weight="700" fill="#5d5644" letter-spacing="1">
+                    <text x="92" y="176">FILE</text>
+                    <text x="500" y="176">CACHE-CONTROL</text>
+                    <text x="940" y="176">WHY</text>
+                  </g>
+              
+                  <g>
+                    <rect x="60" y="196" width="1080" height="80" rx="12" fill="#ffffff" stroke="#ded5bd"/>
+                    <text x="92" y="232" font-size="18" font-weight="700" fill="#111111" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">app.4f1c2a.js</text>
+                    <text x="92" y="258" font-size="15" fill="#5d5644">hashed bundles and CSS</text>
+                    <text x="500" y="232" font-size="17" font-weight="700" fill="#111111" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">max-age=31536000,</text>
+                    <text x="500" y="256" font-size="17" font-weight="700" fill="#111111" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">immutable</text>
+                    <text x="940" y="240" font-size="15" fill="#5d5644">New build, new name.</text>
+                  </g>
+              
+                  <g>
+                    <rect x="60" y="290" width="1080" height="80" rx="12" fill="#ffffff" stroke="#ded5bd"/>
+                    <text x="92" y="326" font-size="18" font-weight="700" fill="#111111" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">logo.png</text>
+                    <text x="92" y="352" font-size="15" fill="#5d5644">images and fonts</text>
+                    <text x="500" y="338" font-size="17" font-weight="700" fill="#111111" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">max-age=604800</text>
+                    <text x="940" y="334" font-size="15" fill="#5d5644">A week is plenty.</text>
+                  </g>
+              
+                  <g>
+                    <rect x="60" y="384" width="1080" height="80" rx="12" fill="#111111"/>
+                    <text x="92" y="420" font-size="18" font-weight="700" fill="#fffdf6" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">index.html</text>
+                    <text x="92" y="446" font-size="15" fill="#c8bd9e">every entry document</text>
+                    <text x="500" y="432" font-size="17" font-weight="700" fill="#f6c90e" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">no-cache</text>
+                    <text x="940" y="428" font-size="15" fill="#c8bd9e">It points at the new bundles.</text>
+                  </g>
+                </g>
+              </svg>
+              <figcaption>Long cache on anything with a hash in the name, no cache on the documents that reference them.</figcaption>
+            </figure>
+
+            <p>
+              Set the headers at upload time, in two passes:
+            </p>
+            <pre><code class="language-shell"># 1. everything except HTML: cache hard
+aws s3 sync ./dist s3://example-site-prod --delete \
+  --exclude "*.html" \
+  --cache-control "public,max-age=31536000,immutable"
+
+# 2. HTML last, uncached, so it never points at missing bundles
+aws s3 sync ./dist s3://example-site-prod \
+  --exclude "*" --include "*.html" \
+  --cache-control "no-cache"
+
+# 3. drop the edge copies of the HTML
+aws cloudfront create-invalidation \
+  --distribution-id E1A2B3C4D5E6F7 \
+  --paths "/*"</code></pre>
+            <p>
+              Assets first, HTML second, invalidation last. In that order there is no moment where
+              a new page is asking for a bundle that has not finished uploading. Invalidations are
+              free for the first 1,000 paths a month; <code>"/*"</code> counts as one.
+            </p>
+
+            <h2>Deploying from GitHub instead of your laptop</h2>
+            <p>
+              Running the deploy by hand is fine until you forget the header flags or upload from a
+              stale branch. Moving it into GitHub Actions makes every push to <code>main</code>
+              produce the same three steps, in the same order:
+            </p>
+            <pre><code class="language-yaml">name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  id-token: write   # lets the runner assume the AWS role
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci && npm run build
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::111122223333:role/github-deploy
+          aws-region: ap-south-1
+
+      - run: |
+          aws s3 sync ./dist s3://example-site-prod --delete \
+            --exclude "*.html" --cache-control "public,max-age=31536000,immutable"
+          aws s3 sync ./dist s3://example-site-prod \
+            --exclude "*" --include "*.html" --cache-control "no-cache"
+          aws cloudfront create-invalidation \
+            --distribution-id E1A2B3C4D5E6F7 --paths "/*"</code></pre>
+            <p>
+              Use an IAM role with GitHub's OIDC provider as the trust, not an access key stored in
+              repository secrets. A long-lived key in CI is the credential most likely to end up
+              somewhere it should not be; a role issues short-lived credentials to that one
+              repository and nothing else.
+            </p>
+
+            <h2>Clean URLs and error pages</h2>
+            <p>
+              CloudFront serves <code>index.html</code> for the root, but not for
+              <code>/about/</code> &mdash; the request arrives for a key that does not exist and you
+              get a 403. Two ways round it:
+            </p>
+            <ul>
+              <li>
+                <strong>Multi-page sites</strong> &mdash; a small CloudFront Function on viewer
+                request that appends <code>index.html</code> to any path ending in a slash. That is
+                the mechanism behind directory-style URLs like the one you are reading.
+              </li>
+              <li>
+                <strong>Single-page apps</strong> &mdash; a custom error response mapping 403 and 404
+                to <code>/index.html</code> with a 200 status, so the client-side router handles the
+                path.
+              </li>
+            </ul>
+            <p>
+              Also set a real 404 page for the multi-page case. The default CloudFront error is XML
+              and it looks broken, because to a visitor it is.
+            </p>
+
+            <h2>Before you call it done</h2>
+            <ul>
+              <li>Load the site over <code>http://</code> and confirm it redirects to HTTPS.</li>
+              <li>Load the non-canonical hostname and confirm it redirects once, not in a loop.</li>
+              <li>Check a response header: <code>x-cache: Hit from cloudfront</code> on a second request.</li>
+              <li>Try the bucket URL directly &mdash; it should return Access Denied. If the site loads, the bucket is public.</li>
+              <li>Deploy a visible change and reload; if you still see the old page, the HTML got cached.</li>
+              <li>Set a billing alert. Two minutes, and it catches the mistakes that pricing pages do not.</li>
+            </ul>
+
+            <h2>When it is worth handing over</h2>
+            <p>
+              None of these steps are hard, but there are enough of them that one gets skipped, and
+              the skipped one is usually the certificate region, the public bucket, or the cache
+              header. We set this up as part of deployment work &mdash; buckets, distributions, DNS,
+              SSL, and a deploy script your team can run &mdash; on AWS, Azure, or Google Cloud. If
+              you already have a site on S3 behaving oddly, send the domain and the distribution ID.
+            </p>
+        
+        </div>
+
+        <div class="container article-related">
+          <div class="article-related-head">
+            <p class="eyebrow">Keep reading</p>
+            <h2>More from the blog</h2>
+          </div>
+          <div class="blog-grid">
+          <article class="blog-card">
+            <a class="blog-card-media" href="/blog/introduction-to-the-cloud/" tabindex="-1" aria-hidden="true">
+              <img src="assets/images/hero/hero-cloud.png" alt="" loading="lazy">
+            </a>
+            <div class="blog-card-body">
+              <div class="blog-meta">
+                <span class="blog-chip">Cloud</span>
+                <span>10 August 2026</span>
+                <span>9 min read</span>
+              </div>
+              <h3><a href="/blog/introduction-to-the-cloud/">Introduction to the cloud</a></h3>
+              <p>What the cloud actually is, the three service models, what you pay for, and the handful of settings that decide whether your site stays up.</p>
+              <span class="summary-more">Read article</span>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <a class="blog-card-media" href="/blog/what-is-paritylk/" tabindex="-1" aria-hidden="true">
+              <img src="assets/images/hero/hero-websites.png" alt="" loading="lazy">
+            </a>
+            <div class="blog-card-body">
+              <div class="blog-meta">
+                <span class="blog-chip">Company</span>
+                <span>4 August 2026</span>
+                <span>6 min read</span>
+              </div>
+              <h3><a href="/blog/what-is-paritylk/">What is ParityLk, and what do we actually do?</a></h3>
+              <p>A plain explanation of who we are, the work we take on, and how a project moves from a first message to something live and supported.</p>
+              <span class="summary-more">Read article</span>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <a class="blog-card-media" href="/blog/introduction-to-digital-marketing/" tabindex="-1" aria-hidden="true">
+              <img src="assets/images/hero/hero-content.png" alt="" loading="lazy">
+            </a>
+            <div class="blog-card-body">
+              <div class="blog-meta">
+                <span class="blog-chip">Marketing</span>
+                <span>28 July 2026</span>
+                <span>8 min read</span>
+              </div>
+              <h3><a href="/blog/introduction-to-digital-marketing/">Introduction to digital marketing</a></h3>
+              <p>The channels, the funnel, and the handful of numbers worth tracking &mdash; a beginner's map for anyone about to spend their first marketing budget.</p>
+              <span class="summary-more">Read article</span>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <a class="blog-card-media" href="/blog/website-or-mobile-app-first/" tabindex="-1" aria-hidden="true">
+              <img src="assets/images/hero/hero-mobile-apps.png" alt="" loading="lazy">
+            </a>
+            <div class="blog-card-body">
+              <div class="blog-meta">
+                <span class="blog-chip">Guides</span>
+                <span>21 July 2026</span>
+                <span>7 min read</span>
+              </div>
+              <h3><a href="/blog/website-or-mobile-app-first/">Website or mobile app: which should you build first?</a></h3>
+              <p>Apps feel like the serious choice, but they are usually the second one. How to tell which your business actually needs right now.</p>
+              <span class="summary-more">Read article</span>
+            </div>
+          </article>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="cta-band">
+            <div>
+              <h2>Want this kind of work for your business?</h2>
+              <p>Send a short brief about what you want to build, learn, or fix. We reply within one business day.</p>
+            </div>
+            <div class="cta-actions">
+              <a class="button button-primary" href="/contact/">Start a project</a>
+              <a class="button button-secondary" href="/blog/">More articles</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer" aria-labelledby="footer-title">
+      <div class="container footer-main">
+        <div class="footer-brand">
+          <a class="footer-logo" href="/" aria-label="ParityLk home">
+            <img
+              src="assets/images/paritylk-navbar-logo.png"
+              width="128"
+              height="54"
+              alt=""
+              aria-hidden="true"
+            >
+          </a>
+          <h2 id="footer-title">Digital delivery for growing teams.</h2>
+          <p>
+            Websites, mobile apps, social content, deployments, monitoring, and practical
+            software support for companies that need reliable execution.
+          </p>
+        </div>
+
+        <nav class="footer-links" aria-label="Footer navigation">
+          <div>
+            <h3>Explore</h3>
+            <a href="/services/">Services</a>
+            <a href="/cloud/">Cloud</a>
+            <a href="/support/">Our work</a>
+            <a href="/courses/">Courses</a>
+            <a href="/careers/">Careers</a>
+            <a href="/blog/">Blogs</a>
+          </div>
+          <div>
+            <h3>Services</h3>
+            <a href="/services/">Websites</a>
+            <a href="/services/">Mobile apps</a>
+            <a href="/services/">Content creation</a>
+            <a href="/services/">Monitoring</a>
+          </div>
+          <div>
+            <h3>Careers</h3>
+            <a href="/careers/">React Native Intern</a>
+            <a href="/careers/">Flutter Intern</a>
+            <a href="https://forms.gle/r8dBgu6D9do1oTmeA" target="_blank" rel="noopener">Apply interest</a>
+          </div>
+          <div>
+            <h3>Contact</h3>
+            <a href="mailto:info@paritylk.com">info@paritylk.com</a>
+            <a href="/contact/">Request a consultation</a>
+            <a href="/">Home</a>
+          </div>
+        </nav>
+      </div>
+
+      <div class="container footer-bottom">
+        <p>&copy; <span data-year></span> ParityLk. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="assets/js/main.js?v=multipage-2"></script>
+  </body>
+</html>

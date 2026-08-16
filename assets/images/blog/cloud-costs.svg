@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="1200" height="520" role="img" aria-label="The three recurring sources of surprise cloud costs: egress, idle resources and over-provisioning.">
   <rect width="1200" height="520" fill="#fffdf6"/>
-  <g font-family="'Plus Jakarta Sans',sans-serif">
+  <g font-family="'Plus Jakarta Sans','Helvetica Neue',Helvetica,Arial,sans-serif">
     <text x="60" y="72" font-size="34" font-weight="800" fill="#111111">Where the bill actually comes from</text>
     <text x="60" y="108" font-size="20" fill="#5d5644">Metered, not fixed. These three cause most surprises.</text>
 

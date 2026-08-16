@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500" role="img" aria-label="Cache-Control values for hashed assets, images and HTML entry files.">
+  <rect width="1200" height="500" fill="#fffdf6"/>
+  <g font-family="'Plus Jakarta Sans','Helvetica Neue',Helvetica,Arial,sans-serif">
+    <text x="60" y="76" font-size="34" font-weight="800" fill="#111111">Cache the assets, never the HTML</text>
+    <text x="60" y="112" font-size="20" fill="#5d5644">The single header that decides whether a deploy is visible.</text>
+
+    <g font-size="14" font-weight="700" fill="#5d5644" letter-spacing="1">
+      <text x="92" y="176">FILE</text>
+      <text x="500" y="176">CACHE-CONTROL</text>
+      <text x="940" y="176">WHY</text>
+    </g>
+
+    <g>
+      <rect x="60" y="196" width="1080" height="80" rx="12" fill="#ffffff" stroke="#ded5bd"/>
+      <text x="92" y="232" font-size="18" font-weight="700" fill="#111111" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">app.4f1c2a.js</text>
+      <text x="92" y="258" font-size="15" fill="#5d5644">hashed bundles and CSS</text>
+      <text x="500" y="232" font-size="17" font-weight="700" fill="#111111" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">max-age=31536000,</text>
+      <text x="500" y="256" font-size="17" font-weight="700" fill="#111111" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">immutable</text>
+      <text x="940" y="240" font-size="15" fill="#5d5644">New build, new name.</text>
+    </g>
+
+    <g>
+      <rect x="60" y="290" width="1080" height="80" rx="12" fill="#ffffff" stroke="#ded5bd"/>
+      <text x="92" y="326" font-size="18" font-weight="700" fill="#111111" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">logo.png</text>
+      <text x="92" y="352" font-size="15" fill="#5d5644">images and fonts</text>
+      <text x="500" y="338" font-size="17" font-weight="700" fill="#111111" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">max-age=604800</text>
+      <text x="940" y="334" font-size="15" fill="#5d5644">A week is plenty.</text>
+    </g>
+
+    <g>
+      <rect x="60" y="384" width="1080" height="80" rx="12" fill="#111111"/>
+      <text x="92" y="420" font-size="18" font-weight="700" fill="#fffdf6" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">index.html</text>
+      <text x="92" y="446" font-size="15" fill="#c8bd9e">every entry document</text>
+      <text x="500" y="432" font-size="17" font-weight="700" fill="#f6c90e" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace">no-cache</text>
+      <text x="940" y="428" font-size="15" fill="#c8bd9e">It points at the new bundles.</text>
+    </g>
+  </g>
+</svg>

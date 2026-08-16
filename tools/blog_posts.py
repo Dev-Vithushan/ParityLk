@@ -2,6 +2,295 @@
 
 POSTS = [
     {
+        "slug": "deploy-a-static-site-on-s3",
+        "title": "Deploy a static site on Amazon S3",
+        "category": "Cloud",
+        "date": "2026-08-16",
+        "date_label": "16 August 2026",
+        "read": "11 min read",
+        "image": "assets/images/hero/hero-cloud.png",
+        "image_alt": "Cloud deployment workspace showing storage buckets, distribution nodes, and configuration panels.",
+        "excerpt": (
+            "Bucket, policy, certificate, DNS, cache headers and a repeatable deploy "
+            "command &mdash; the full configuration for putting a static site on S3 behind CloudFront."
+        ),
+        "body": """
+            <h2>What this actually gets you</h2>
+            <p>
+              A static site &mdash; HTML, CSS, JavaScript, images, no server-side code &mdash; needs
+              somewhere to keep files and something to hand them to visitors over HTTPS. On AWS
+              that is an S3 bucket for the files and a CloudFront distribution in front of it for
+              TLS, custom domains, and an edge cache.
+            </p>
+            <p>
+              There are no servers to patch and nothing that can crash at 2am. For a typical
+              brochure site the bill lands in the region of a dollar a month, most of it CloudFront
+              traffic rather than storage.
+            </p>
+            <div class="cloud-providers article-logos" aria-label="Amazon Web Services">
+              <span class="cloud-provider">
+                <img src="assets/images/cloud/aws.svg" width="512" height="307" alt="Amazon Web Services logo" loading="lazy">
+              </span>
+            </div>
+            <p>
+              The whole stack is four services, and you touch each of them once:
+            </p>
+
+            <figure class="article-figure">
+              <img src="assets/images/blog/aws-static-stack.svg" alt="The four AWS services used: Amazon S3, CloudFront, Certificate Manager and Route 53." loading="lazy" width="1200" height="460">
+              <figcaption>S3 holds the files, CloudFront serves them, ACM issues the certificate, Route 53 carries the name.</figcaption>
+            </figure>
+
+            <figure class="article-figure">
+              <img src="assets/images/blog/s3-architecture.svg" alt="Architecture diagram: visitors resolve through Route 53 to CloudFront, which holds the ACM certificate and reads a private S3 bucket in one region through Origin Access Control, while the build output is uploaded straight to the bucket." loading="lazy" width="1200" height="700">
+              <figcaption>The request path runs left to right; the deploy path is the dashed line into the bucket.</figcaption>
+            </figure>
+
+            <h2>Website endpoint or CloudFront?</h2>
+            <p>
+              S3 has a built-in static website endpoint, and every tutorial starts there. It works,
+              but it serves plain HTTP and requires the bucket to be publicly readable, so it
+              cannot carry your domain with a padlock on it.
+            </p>
+            <p>
+              The setup worth learning is the second one: keep the bucket private and put
+              CloudFront in front with Origin Access Control. Same files, but with HTTPS, a free
+              certificate that renews itself, and a cache that puts your site near the visitor.
+            </p>
+
+            <figure class="article-figure">
+              <img src="assets/images/blog/s3-hosting-modes.svg" alt="Comparison of the S3 website endpoint against CloudFront with Origin Access Control." loading="lazy" width="1200" height="520">
+              <figcaption>The website endpoint is a test tool. CloudFront is what you launch on.</figcaption>
+            </figure>
+
+            <h2>Create the bucket</h2>
+            <p>
+              The bucket name only has to be unique within AWS &mdash; it never appears in a URL once
+              CloudFront is in front, so it does not need to match your domain. Pick a region close
+              to you or to whoever updates the site; the cache handles distance for everyone else.
+            </p>
+            <pre><code class="language-shell">aws s3api create-bucket \\
+  --bucket example-site-prod \\
+  --region ap-south-1 \\
+  --create-bucket-configuration LocationConstraint=ap-south-1
+
+# keep every public-access door shut
+aws s3api put-public-access-block \\
+  --bucket example-site-prod \\
+  --public-access-block-configuration \\
+    "BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
+
+# versioning: a bad deploy stays recoverable
+aws s3api put-bucket-versioning \\
+  --bucket example-site-prod \\
+  --versioning-configuration Status=Enabled</code></pre>
+            <p>
+              Leave <code>Block all public access</code> on. With CloudFront and OAC, nothing about
+              this setup requires the bucket to be public, and a public bucket is the single most
+              common way static hosting goes wrong.
+            </p>
+
+            <h2>Upload the build output</h2>
+            <p>
+              &ldquo;Build output&rdquo; is the folder your build command produces &mdash;
+              <code>dist/</code>, <code>build/</code>, <code>public/</code> or <code>_site/</code>,
+              depending on the tool. It is not in AWS and not in your repository: it is generated
+              on whichever machine runs <code>npm run build</code>, and it is normally in
+              <code>.gitignore</code>. What you commit is the source; what you upload is the output.
+            </p>
+            <p>
+              That machine is either your laptop or a CI runner such as GitHub Actions. The command
+              is the same in both places; only the credentials differ. Upload the contents of the
+              build directory, not the directory itself &mdash; everything is relative to the bucket
+              root, so an extra folder level is the reason a site loads with no styling.
+            </p>
+            <pre><code class="language-shell">aws s3 sync ./dist s3://example-site-prod --delete</code></pre>
+            <p>
+              The <code>--delete</code> flag removes files in the bucket that no longer exist in the
+              build. Without it, deleted pages stay live for months and old bundles quietly
+              accumulate storage cost.
+            </p>
+
+            <h2>Point CloudFront at the bucket</h2>
+            <p>
+              Create a distribution whose origin is the S3 <em>bucket</em> (the
+              <code>.s3.amazonaws.com</code> name), not the website endpoint, and attach an Origin
+              Access Control. The settings that matter:
+            </p>
+            <ul>
+              <li><strong>Origin access</strong> &mdash; Origin Access Control, signed with SigV4.</li>
+              <li><strong>Viewer protocol policy</strong> &mdash; redirect HTTP to HTTPS.</li>
+              <li><strong>Default root object</strong> &mdash; <code>index.html</code>, so the bare domain resolves to something.</li>
+              <li><strong>Compression</strong> &mdash; on. It is a checkbox and it is free.</li>
+              <li><strong>Alternate domain name</strong> &mdash; your domain, plus the <code>www</code> variant if you use one.</li>
+            </ul>
+            <p>
+              CloudFront will offer to write the bucket policy for you. It ends up looking like
+              this &mdash; access granted to the CloudFront service principal, restricted to one
+              distribution:
+            </p>
+            <pre><code class="language-json">{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Sid": "AllowCloudFrontRead",
+    "Effect": "Allow",
+    "Principal": { "Service": "cloudfront.amazonaws.com" },
+    "Action": "s3:GetObject",
+    "Resource": "arn:aws:s3:::example-site-prod/*",
+    "Condition": {
+      "StringEquals": {
+        "AWS:SourceArn": "arn:aws:cloudfront::111122223333:distribution/E1A2B3C4D5E6F7"
+      }
+    }
+  }]
+}</code></pre>
+            <p>
+              Note what is missing: no <code>"Principal": "*"</code>, no public read. If your policy
+              has either, the bucket is open to the internet regardless of what CloudFront is doing.
+            </p>
+
+            <h2>Certificate and DNS</h2>
+            <p>
+              Request the certificate in AWS Certificate Manager in <strong>us-east-1</strong>.
+              This catches almost everyone once: CloudFront only reads certificates from that
+              region, no matter where the bucket lives. Validate by DNS so it renews without you.
+            </p>
+            <p>
+              Then point the domain at the distribution. In Route 53 that is an A record of type
+              <em>alias</em> targeting CloudFront &mdash; not a CNAME, which cannot sit on a bare
+              domain. On another DNS provider, use a CNAME for <code>www</code> and whatever
+              flattening or ALIAS feature they offer for the apex.
+            </p>
+            <p>
+              Pick one canonical hostname and redirect the other to it. Serving the site on both
+              <code>example.com</code> and <code>www.example.com</code> splits your SEO and doubles
+              the surprises.
+            </p>
+
+            <h2>Cache headers, and the deploy that ignores them</h2>
+            <p>
+              This is the part that decides whether visitors see your update. Hashed asset
+              filenames change on every build, so they can be cached forever. HTML entry files keep
+              the same name and point at those assets, so they must never be cached.
+            </p>
+
+            <figure class="article-figure">
+              <img src="assets/images/blog/s3-cache-headers.svg" alt="Table of Cache-Control values for hashed bundles, images and HTML files." loading="lazy" width="1200" height="500">
+              <figcaption>Long cache on anything with a hash in the name, no cache on the documents that reference them.</figcaption>
+            </figure>
+
+            <p>
+              Set the headers at upload time, in two passes:
+            </p>
+            <pre><code class="language-shell"># 1. everything except HTML: cache hard
+aws s3 sync ./dist s3://example-site-prod --delete \\
+  --exclude "*.html" \\
+  --cache-control "public,max-age=31536000,immutable"
+
+# 2. HTML last, uncached, so it never points at missing bundles
+aws s3 sync ./dist s3://example-site-prod \\
+  --exclude "*" --include "*.html" \\
+  --cache-control "no-cache"
+
+# 3. drop the edge copies of the HTML
+aws cloudfront create-invalidation \\
+  --distribution-id E1A2B3C4D5E6F7 \\
+  --paths "/*"</code></pre>
+            <p>
+              Assets first, HTML second, invalidation last. In that order there is no moment where
+              a new page is asking for a bundle that has not finished uploading. Invalidations are
+              free for the first 1,000 paths a month; <code>"/*"</code> counts as one.
+            </p>
+
+            <h2>Deploying from GitHub instead of your laptop</h2>
+            <p>
+              Running the deploy by hand is fine until you forget the header flags or upload from a
+              stale branch. Moving it into GitHub Actions makes every push to <code>main</code>
+              produce the same three steps, in the same order:
+            </p>
+            <pre><code class="language-yaml">name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  id-token: write   # lets the runner assume the AWS role
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci && npm run build
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::111122223333:role/github-deploy
+          aws-region: ap-south-1
+
+      - run: |
+          aws s3 sync ./dist s3://example-site-prod --delete \\
+            --exclude "*.html" --cache-control "public,max-age=31536000,immutable"
+          aws s3 sync ./dist s3://example-site-prod \\
+            --exclude "*" --include "*.html" --cache-control "no-cache"
+          aws cloudfront create-invalidation \\
+            --distribution-id E1A2B3C4D5E6F7 --paths "/*"</code></pre>
+            <p>
+              Use an IAM role with GitHub's OIDC provider as the trust, not an access key stored in
+              repository secrets. A long-lived key in CI is the credential most likely to end up
+              somewhere it should not be; a role issues short-lived credentials to that one
+              repository and nothing else.
+            </p>
+
+            <h2>Clean URLs and error pages</h2>
+            <p>
+              CloudFront serves <code>index.html</code> for the root, but not for
+              <code>/about/</code> &mdash; the request arrives for a key that does not exist and you
+              get a 403. Two ways round it:
+            </p>
+            <ul>
+              <li>
+                <strong>Multi-page sites</strong> &mdash; a small CloudFront Function on viewer
+                request that appends <code>index.html</code> to any path ending in a slash. That is
+                the mechanism behind directory-style URLs like the one you are reading.
+              </li>
+              <li>
+                <strong>Single-page apps</strong> &mdash; a custom error response mapping 403 and 404
+                to <code>/index.html</code> with a 200 status, so the client-side router handles the
+                path.
+              </li>
+            </ul>
+            <p>
+              Also set a real 404 page for the multi-page case. The default CloudFront error is XML
+              and it looks broken, because to a visitor it is.
+            </p>
+
+            <h2>Before you call it done</h2>
+            <ul>
+              <li>Load the site over <code>http://</code> and confirm it redirects to HTTPS.</li>
+              <li>Load the non-canonical hostname and confirm it redirects once, not in a loop.</li>
+              <li>Check a response header: <code>x-cache: Hit from cloudfront</code> on a second request.</li>
+              <li>Try the bucket URL directly &mdash; it should return Access Denied. If the site loads, the bucket is public.</li>
+              <li>Deploy a visible change and reload; if you still see the old page, the HTML got cached.</li>
+              <li>Set a billing alert. Two minutes, and it catches the mistakes that pricing pages do not.</li>
+            </ul>
+
+            <h2>When it is worth handing over</h2>
+            <p>
+              None of these steps are hard, but there are enough of them that one gets skipped, and
+              the skipped one is usually the certificate region, the public bucket, or the cache
+              header. We set this up as part of deployment work &mdash; buckets, distributions, DNS,
+              SSL, and a deploy script your team can run &mdash; on AWS, Azure, or Google Cloud. If
+              you already have a site on S3 behaving oddly, send the domain and the distribution ID.
+            </p>
+        """,
+    },
+    {
         "slug": "introduction-to-the-cloud",
         "title": "Introduction to the cloud",
         "category": "Cloud",
